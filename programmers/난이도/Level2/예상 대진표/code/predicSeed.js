@@ -21,9 +21,9 @@ const solution = (n, a, b) => {
   while (big <= n / 2 || n / 2 < small) {
     answer -= 1;
     n /= 2;
-    if (small > n / 2) {
-      a -= n / 2;
-      b -= n / 2;
+    if (small > n) {
+      a -= n;
+      b -= n;
     }
     big = a - b > 0 ? a : b;
     small = a - b > 0 ? b : a;
