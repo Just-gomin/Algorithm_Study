@@ -23,15 +23,15 @@ const isLiInList = (list, ele) => {
   return result;
 };
 
-const solution = (m, n, board) => {
+const solution = (row, col, board) => {
   let result = 0;
   let nboard = [],
     boomlist = [];
-  for (let i = 0; i < m; i++) nboard.push(board[i].split(""));
+  for (let i = 0; i < row; i++) nboard.push(board[i].split(""));
 
   const boomFilter = () => {
-    for (let i = 0; i < m - 1; i++) {
-      for (let j = 0; j < n - 1; j++) {
+    for (let i = 0; i < row - 1; i++) {
+      for (let j = 0; j < col - 1; j++) {
         let block = nboard[i][j];
         if (
           block != "" &&
@@ -64,11 +64,16 @@ const solution = (m, n, board) => {
   };
 
   const blockDowm = () => {
-    for (let i = 0; i < m - 1; i++) {
-      for (let j = 0; j < n; j++) {
-        if (nboard[i][j] != "" && nboard[i + 1][j] == "") {
-          nboard[i + 1][j] = nboard[i][j];
-          nboard[i][j] = "";
+    for (let j = 0; j < col; j++) {
+      for (let i = row - 1; i > 0; i--) {
+        if (nboard[i][j] == "") {
+          for (let k = i - 1; k >= 0; k--) {
+            if (nboard[k][j] !== "") {
+              nboard[i][j] = nboard[k][j];
+              nboard[k][j] = "";
+              break;
+            }
+          }
         }
       }
     }
@@ -76,14 +81,12 @@ const solution = (m, n, board) => {
 
   boomFilter();
   while (boomlist.length != 0) {
-    console.log("boomlist : ", boomlist);
     boom();
     blockDowm();
-    console.log("nboard : ", nboard);
     boomFilter();
   }
 
   return result;
 };
 
-console.log(solution(4, 5, ["CCBDE", "AAADE", "AAABF", "CCBBF"]));
+console.log(solution(5, 6, ["AAAAAA", "BBAATB", "BBAATB", "JJJTAA", "JJJTAA"]));
