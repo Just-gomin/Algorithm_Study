@@ -9,6 +9,7 @@ const get_nCr = (selectNum = 1, data = []) => {
   let result = [];
   if (selectNum === 1) return data.map((value) => [value]);
   else if (selectNum === data.length) return [data];
+  else if (selectNum <= 0) return [];
 
   data.forEach((value, index, arr) => {
     const rest = arr.slice(index + 1);
