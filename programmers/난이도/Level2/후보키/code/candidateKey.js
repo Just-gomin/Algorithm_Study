@@ -6,32 +6,65 @@
     2. 후보키는 1개의 속성만이 아니라 2개 이상의 조합으로 구성될 수 있습니다.
 
     # 문제 해결 방안
-    1. 속성 1개로 후보키 확인
-        해당 인덱스의 값을 array에 넣고 Set을 통해서 고유값만을 남긴 뒤 튜플의 수와 비교.(유일성)
-    2. 속성 n개로 후보키 확인
-        1) 위 1과정에서 후보키가 되지 못한 속성들에 대한 조합을 구합니다.(최소성)
-        2) 1)에서 구한 조합들을 이용해 해당 인덱스의 값들을 string화하여 array에 넣고 Set을 통해서 고유값을 남긴 뒤 튜플의 수와 비교합니다.(유일성)
+    1. 후보키를 구성하는 속성의 수를 하나씩 늘려가며 확인합니다.
+    2. 1개의 속성으로 후보키를 검사하는 방법은 해당 속성의 값을 튜플들로 부터 추출하고, Set으로 만듭니다. 해당 Set의 길이와 튜플의 수가 동일하다면 해당 속성은 후보키가 될 수 있습니다.
+    3. 후보키가 되지 못한 속성들을 추려서 조합합니다.
+    4. 생성한 조합의 속성들로 후보키가 되는지 확인합니다.
+    5. 후보키가 되지 못한 속성들로 3,4를 반복합니다.
 */
+
+// nCr
+const get_nCr = (selectNum = 1, data = []) => {
+  let result = [];
+  if (selectNum === 1) return data.map((value) => [value]);
+  else if (selectNum === data.length) return [data];
+  else if (selectNum <= 0) return [];
+
+  data.forEach((value, index, arr) => {
+    const rest = arr.slice(index + 1);
+    const combinations = get_nCr(selectNum - 1, rest);
+    const attached = combinations.map((combination) => [value, ...combination]);
+    result.push(...attached);
+  });
+
+  return result;
+};
 
 const solution = (relation = []) => {
   let result = [];
-  let ntuple = relation.length(),
-    nattribute = relation[0].length();
+  let ntuple = relation.length,
+    nattribute = relation[0].length;
   let remainIDX = [];
   for (let i = 0; i < nattribute; i++) remainIDX.push(i);
 
-  // attr 1개 후보키
-  remainIDX.map((attr) => {
-    let checker = [];
-    relation.map((tuple) => {
-      checker.push(tuple[attr]);
+  for (let i = 1; i <= nattribute; i++) {
+    let combinations = get_nCr(i, remainIDX);
+    combinations.forEach((combination) => {
+      let tempSet = [];
+      relation.forEach((tuple) => {
+        let checker = "";
+        combination.forEach((attr) => (checker += tuple[attr]));
+        tempSet.push(checker);
+      });
+      let checkSet = new Set(tempSet);
+      if (checkSet.size === ntuple) {
+        combination.forEach((attr) =>
+          remainIDX.filter((value) => value != attr)
+        );
+        result.push(combination);
+      }
     });
-    let unique = new Set(checker);
-    if (unique.length() == ntuple) {
-      result.push(attr);
-      remainIDX.filter((value) => value != attr);
-    }
-  });
-
-  return result.length();
+  }
+  return result.length;
 };
+
+let example = [
+  ["100", "ryan", "music", "2"],
+  ["200", "apeach", "math", "2"],
+  ["300", "tube", "computer", "3"],
+  ["400", "con", "computer", "4"],
+  ["500", "muzi", "music", "3"],
+  ["600", "apeach", "music", "2"],
+];
+
+console.log(solution(example));
