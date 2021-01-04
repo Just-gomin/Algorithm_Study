@@ -48,8 +48,8 @@ const solution = (relation = []) => {
       });
       let checkSet = new Set(tempSet);
       if (checkSet.size === ntuple) {
-        combination.forEach((attr) =>
-          remainIDX.filter((value) => value != attr)
+        combination.forEach(
+          (attr) => (remainIDX = remainIDX.filter((value) => value != attr))
         );
         result.push(combination);
       }
@@ -67,4 +67,4 @@ let example = [
   ["600", "apeach", "music", "2"],
 ];
 
-console.log(solution(example));
+console.log(solution(example)); // result = 2
