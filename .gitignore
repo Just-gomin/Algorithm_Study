@@ -1,2 +1,6 @@
-.vscode/*
+# Setting for VScode
+.vscode
 programmers/.vscode
+
+# Mac's service file
+.DS_Store
