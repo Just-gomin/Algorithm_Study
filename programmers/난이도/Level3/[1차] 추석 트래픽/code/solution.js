@@ -8,35 +8,41 @@
     3. 초당 최대 처리량을 리턴합니다.
 
     # 문제 해결 방안
-    1. 초당 최대 계산량을 구하는 문제이므로, 처리 시작시간과 완료시간을 모두 초단위로 계산합니다.
-    2. 시작시간부터 완료시간까지 처리량을 하나씩 늘려 줍니다. 
+    1. 각 로그들을 통해 시작 시간과 완료 시간을 계산하고 이를 배열로 묶어 새로운 로그 배열을 생성합니다. 
+    2. 최소 시간 단위가 0.001s인데 이를 시작 시간과 완료시간에 모두 1000을 곱해 1s 단위로 끝나게 합니다.
+    3. 1000 단위 씩 진행되는 반복분을 통해 해당 1000단위 동안 처리되는 트래픽의 수를 세서 최대 값을 산출합니다. 
 */
 
 const solution = (lines = []) => {
-  let result = -99;
-  let hps = {};
-  let start = 99999999,
-    fin = -999999;
+  let result = 0;
+  let start = 9999999,
+    fin = -9999999;
+  let newLogs = [];
+
+  // 시작 시간과 완료 시간을 담은 새로운 로그 생성
   lines.forEach((log) => {
     let logArr = log.split(" ");
-    let hLen = parseFloat(logArr[2].match(/[.\d]+/g).join(""));
+    let hLen = parseFloat(logArr[2].match(/[.\d]+/g).join("")) * 1000;
     let finTime = 0,
       startTime = 0;
     logArr[1].split(":").forEach((value, index) => {
-      finTime += parseFloat(value) * Math.pow(60, 2 - index);
+      finTime += parseFloat(value) * Math.pow(60, 2 - index) * 1000;
     });
-    startTime = finTime - hLen + 0.001;
-    startTime = parseInt(startTime);
-    finTime = parseInt(finTime);
+    startTime = finTime - hLen + 1;
     if (fin < finTime) fin = finTime;
     if (start > startTime) start = startTime;
-    for (let i = startTime; i <= finTime; i++) {
-      if (hps["" + i] === undefined) hps["" + i] = 1;
-      else hps["" + i] += 1;
-    }
+    newLogs.push([startTime, finTime]);
   });
-  for (let i = start; i <= fin; i++) {
-    if (result < hps["" + i]) result = hps["" + i];
+
+  // 1초 단위로 해당 구간에서 처리 중인 트래픽량을 세서 최대값을 계산
+  for (let s = start; s <= fin - 999; s += 1) {
+    let f = s + 999;
+    let count = 0;
+    newLogs.forEach((log) => {
+      if (s <= log[0] && log[0] <= f) count += 1;
+      else if (s <= log[1] && log[1] <= f) count += 1;
+    });
+    if (result < count) result = count;
   }
   return result;
 };
