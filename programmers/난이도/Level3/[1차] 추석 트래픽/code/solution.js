@@ -9,14 +9,18 @@
 
     # 문제 해결 방안
     1. 각 로그들을 통해 시작 시간과 완료 시간을 계산하고 이를 배열로 묶어 새로운 로그 배열을 생성합니다. 
-    2. 최소 시간 단위가 0.001s인데 이를 시작 시간과 완료시간에 모두 1000을 곱해 1s 단위로 끝나게 합니다.
-    3. 1000 단위 씩 진행되는 반복분을 통해 해당 1000단위 동안 처리되는 트래픽의 수를 세서 최대 값을 산출합니다. 
+    2. 최소 시간 단위가 0.001s인데 이를 시작 시간과 완료시간에 모두 1000을 곱해 1ms 단위로 끝나게 합니다.
+    3. 문제에서 요구하고 있는 결과 값은 초당 최대 계산량으로, 한 트래픽에 대해서 계산이 끝나더라도 다음 트래픽 처리 까지 걸리는 시간이 1초 내라면 수를 세어야합니다. 따라서 끝나는 시간에 999ms를 더해서 계산을 진행합니다.
+    4. 시작 시간은 Start라는 상태, 끝나는 시간은 END라는 상태를 부여하고, 시간을 오름차순으로 정렬 시킵니다. 단, 시간이 동일한 경우에 한해서는 시작, 끝 순으로 정렬합니다.
+    
+    # 솔루션 참고
+    - Link : https://softworking.tistory.com/379 
 */
 
 const solution = (lines = []) => {
   let result = 0;
-  let start = 9999999,
-    fin = -9999999;
+  let start = -1,
+    fin = 1;
   let newLogs = [];
 
   // 시작 시간과 완료 시간을 담은 새로운 로그 생성
@@ -29,20 +33,24 @@ const solution = (lines = []) => {
       finTime += parseFloat(value) * Math.pow(60, 2 - index) * 1000;
     });
     startTime = finTime - hLen + 1;
-    if (fin < finTime) fin = finTime;
-    if (start > startTime) start = startTime;
-    newLogs.push([startTime, finTime]);
+    newLogs.push([startTime, start], [finTime + 999, fin]);
   });
 
-  // 1초 단위로 해당 구간에서 처리 중인 트래픽량을 세서 최대값을 계산
-  for (let s = start; s <= fin - 999; s += 1) {
-    let f = s + 999;
-    let count = 0;
-    newLogs.forEach((log) => {
-      if (s <= log[0] && log[0] <= f) count += 1;
-      else if (s <= log[1] && log[1] <= f) count += 1;
-    });
-    if (result < count) result = count;
+  // newLogs 정렬
+  newLogs.sort((log1, log2) => {
+    if (log1[0] !== log2[0]) {
+      return log1[0] - log2[0];
+    }
+    return log1[1] - log2[1];
+  });
+
+  // 최대치 측정
+  let works = 0;
+  for (let i = 0; i < newLogs.length; i++) {
+    if (newLogs[i][1] === start) works += 1;
+    else works -= 1;
+
+    if (works > result) result = works;
   }
   return result;
 };
