@@ -8,39 +8,32 @@
     4. 위의 규칙대로 터트리기를 진행 했을 때, 최후에 남는 것이 가능한 풍선들의 개수를 반환합니다.
     
     # 문제 해결 방안
-    1. 숫자들을 오름차순으로 정렬한 배열을 생성합니다.
-    2. 풍선들을 맨 왼쪽부터 하나씩 검사해 나갑니다. 검사를 하는 숫자는 정렬된 배열에서 제거 합니다.
-    3. 검사는 현 위치의 풍선을 기준으로 좌우의 최소값들이 현 위치의 수보다 둘다 작은지 확인하는 것입니다.
-    4. 좌측의 최소값은 하나씩 진행하며 비교를 통해 얻을 수 있고, 우측의 최소값은 정렬된 배열에서 0번째 위치의 수가 될 것 입니다.
+    1. 현재 숫자와 양 옆의 수를 먼저 비교하여, 이 둘이 모두 작다면 해당 숫자는 마지막까지 남을 수 없기에 해당 경우 이외에 검사를 진행합니다.
+    2. 좌측의 최소치는 반복문을 진행하며 갱신할 수 있고, 우측의 최소치는 진행을 하며, 해당 숫자와 우측의 최소치가 같을 때 갱신을 합니다.
+    3. 양측의 최소치들과 현재의 숫자를 비교해 둘 모두 현재 숫자보다 작은경우가 아니라면 끝까지 살아남을 수 있습니다.
 
     # 
-    방법은 좋은 것 같으나, sorting과 index를 찾고 지우는 과정에서 연산 횟수가 증가하며 런차임에러가 납니다.
-    효율성에 대해서 더 고민할 필요가 있습니다.
+    해당 방법은 O(n^2)으로 실행되고 있습니다. 해당 문제는 O(n)의 시간복잡도를 요구하고 있는 것 같기에 좀더 개선이 필요합니다.
 */
 
 const solution = (a = []) => {
-  let result = 0;
-
   if (a.length === 1) return 1;
 
-  let sortedA = new Array(...a).sort((v1, v2) => v1 - v2);
-  let minL = a[0];
-  a.forEach((num, index) => {
-    if (index == 0) result += 1;
-    else {
-      sortedA.splice(
-        sortedA.findIndex((value) => value === num),
-        1
-      );
-      if (minL > num) {
-        minL = num;
+  let result = 0;
+
+  let lmin = a[0];
+  let rmin = Math.min(...a);
+
+  for (let i = 0; i < a.length; i += 1) {
+    if (i == 0 || i == a.length - 1) result += 1;
+    else if (a[i] <= a[i - 1] || a[i] <= a[i + 1]) {
+      if (lmin > a[i - 1]) lmin = a[i - 1];
+      if (a[i] === rmin) {
+        rmin = Math.min(...a.slice(i + 1, a.length));
         result += 1;
-      } else {
-        let minR = sortedA[0];
-        if (minL >= num || minR >= num) result += 1;
-      }
+      } else if (lmin >= a[i] || rmin >= a[i]) result += 1;
     }
-  });
+  }
 
   return result;
 };
