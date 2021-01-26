@@ -8,30 +8,33 @@
     4. 위의 규칙대로 터트리기를 진행 했을 때, 최후에 남는 것이 가능한 풍선들의 개수를 반환합니다.
     
     # 문제 해결 방안
-    1. 현재 숫자와 양 옆의 수를 먼저 비교하여, 이 둘이 모두 작다면 해당 숫자는 마지막까지 남을 수 없기에 해당 경우 이외에 검사를 진행합니다.
-    2. 좌측의 최소치는 반복문을 진행하며 갱신할 수 있고, 우측의 최소치는 진행을 하며, 해당 숫자와 우측의 최소치가 같을 때 갱신을 합니다.
-    3. 양측의 최소치들과 현재의 숫자를 비교해 둘 모두 현재 숫자보다 작은경우가 아니라면 끝까지 살아남을 수 있습니다.
+    1. 양쪽 끝의 숫자들은 항상 끝까지 살아 남을 수 있습니다.
+    2. 양쪽 끝의 숫자들 중 더 큰 쪽에서 한칸 씩 옆으로 옮기며, 최소값들을 갱신하며 판별합니다.
+    3. 좌우측 끝의 최솟 값이라 판단되는 숫자들 중 더 큰 숫자보다 작으면 해당 숫자는 살아남을 수 있고 좌우측 끝의 최소 값들 중 큰것을 갱신해야 정확한 판별이 되기 때문에 더 큰 쪽에서 옆으로 옮겨갑니다.
 
-    # 
-    해당 방법은 O(n^2)으로 실행되고 있습니다. 해당 문제는 O(n)의 시간복잡도를 요구하고 있는 것 같기에 좀더 개선이 필요합니다.
+    # 참고
+    https://programmers.co.kr/questions/13657
 */
 
 const solution = (a = []) => {
   if (a.length === 1) return 1;
 
-  let result = 0;
+  let result = 1;
 
   let lmin = a[0];
-  let rmin = Math.min(...a);
+  let rmin = a[a.length - 1];
+  let l = 0;
+  let r = a.length - 1;
 
-  for (let i = 0; i < a.length; i += 1) {
-    if (i == 0 || i == a.length - 1) result += 1;
-    else if (a[i] <= a[i - 1] || a[i] <= a[i + 1]) {
-      if (lmin > a[i - 1]) lmin = a[i - 1];
-      if (a[i] === rmin) {
-        rmin = Math.min(...a.slice(i + 1, a.length));
-        result += 1;
-      } else if (lmin >= a[i] || rmin >= a[i]) result += 1;
+  while (l < r) {
+    if (lmin > rmin) {
+      l += 1;
+      if (a[l] <= lmin || a[l] <= rmin) result += 1;
+      if (a[l] < lmin) lmin = a[l];
+    } else {
+      r -= 1;
+      if (a[r] <= lmin || a[r] <= rmin) result += 1;
+      if (a[r] < rmin) rmin = a[r];
     }
   }
 
