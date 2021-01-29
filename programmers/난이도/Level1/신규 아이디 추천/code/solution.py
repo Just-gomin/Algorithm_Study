@@ -28,10 +28,10 @@ def solution(new_id=""):
     answer = new_id.lower()
     # 1단계 new_id의 모든 대문자를 대응되는 소문자로 치환합니다.
     # 2단계 new_id에서 알파벳 소문자, 숫자, 빼기(-), 밑줄(_), 마침표(.)를 제외한 모든 문자를 제거합니다.
-    answer = re.sub('[^a-z\d_\-.]', '', answer)
+    answer = re.sub(r'[^a-z\d_\-.]', '', answer)
 
     # 3단계 new_id에서 마침표(.)가 2번 이상 연속된 부분을 하나의 마침표(.)로 치환합니다.
-    answer = re.sub('\.+', '.', answer)
+    answer = re.sub(r'\.+', '.', answer)
     # 4단계 new_id에서 마침표(.)가 처음이나 끝에 위치한다면 제거합니다.
     # answer = re.sub('^\.|\.$', '', answer)
     answer.strip('.')
@@ -55,4 +55,4 @@ def solution(new_id=""):
 
 
 example1 = "...!@BaT#*..y.abcdefghijklm"  # result : "bat.y.abcdefghi"
-solution(example1)
+print(solution(example1))
