@@ -9,67 +9,77 @@
     4. 회전을 시킨 배열 3개를 더 만들어 모든 영역에서 일치하는지 검사합니다.
     
     # 문제 해결 방안
-    1. lock의 홈의 개수를 파악합니다.
-    2. 회전을 진행한 배열들을 생성합니다.
-    3. lock(0,0)과 key(M-1,M-1) 한칸이 겹치는 경우를 시작으로,
-        - 오른쪽으로 한칸 이동 시킨 경우
-        - 아래쪽으로 한칸 이동 시킨 경우
-        - 오른쪽으로 한칸, 아래쪽으로 한칸 이동한 경우(대각선 이동)
-        에 대하여 검사를 진행합니다.
-    4. 검사를 진행 중 다음과 같은 상황들을 고려합니다.
-        - lock의 돌기와 key의 돌기가 겹치는 부분 발생시 중단하고 넘어 갑니다.
-        - 겹치는 부분이 없이 확인이 완료되었을 때, lock의 홈의 개수와 key의 돌기와 lock의 홈이 들어 맞은 수의 일치여부를 확인합니다.
-    5. 검사의 결과 중 true가 발생하면 true를 반환합니다.
-    6. 마지막 까지 true가 발생하지 않으면 false를 반환합니다.
+    1. key를 rotate 시킬 수 있는 함수를 생성합니다.
+    2. Key와 Lock을 대조 시킬 수 있는 Map을 생성합니다. ({n+2*(m-1)}^2 크기)
+    3. Map에 Key를 표시합니다.
+    4. Map의 lock부분이 모두 1로 채워진다면 true, 2혹은 0이 존재한다면 false를 반환합니다.
+
+    # 문제 풀이 참고
+    - https://regularmember.tistory.com/186
+    - 2021.02.05_다른 사람 풀이 확인
 */
 
-const rightTurn = (key = []) => {
-  let m = length(key);
-  let result = [];
-  for (let j = 0; j < m; j += 1) {
+const rotate = (key = []) => {
+  const keyLen = key.length;
+  let rKey = [];
+  for (let j = 0; j < keyLen; j += 1) {
     let line = [];
-    for (let i = m - 1; i >= 0; i -= 1) {
+    for (let i = keyLen - 1; i >= 0; i -= 1) {
       line.push(key[i][j]);
     }
-    result.push(line);
+    rKey.push(line);
   }
-  return result;
+  return rKey;
 };
 
 const solution = (key = [], lock = []) => {
-  let answer = false;
+  const keyLen = key.length;
+  const lockLen = lock.length;
+  const mapLen = lockLen + 2 * (keyLen - 1);
+  const offset = keyLen - 1;
+  const limit = keyLen + lockLen - 1;
 
-  let m = length(key),
-    n = length(lock);
+  // Map 생성
+  let map = Array(mapLen)
+    .fill(0)
+    .map((value) => Array(mapLen).fill(0));
 
-  let key2 = rightTurn(key);
-  let key3 = rightTurn(key2);
-  let key4 = rightTurn(key3);
-
-  let gap = 0;
-  lock.forEach((line) => {
-    line.forEach((value) => {
-      if (value == 0) gap += 1;
-    });
-  });
-
-  const isFit = (right = 0, down = 0) => {};
-
-  let checker = [];
-  for (let i = 0; i < m - 1 + n - 1; i++) {
-    let line = [];
-    for (letj = 0; j < m - 1 + n - 1; j++) {
-      line.push(-1);
+  for (let i = 0; i < lockLen; i++) {
+    for (let j = 0; j < lockLen; j++) {
+      map[offset + i][offset + j] = lock[i][j];
     }
-    checker.push(line);
   }
 
-  for (let i = 0; i < m - 1 + n - 1; i++) {
-    let result = [];
-    for (let j = 0; j < m - 1 + n - 1; j++) {
-      result.push();
+  // Marker
+  const markMap = (row, col, marker) => {
+    for (let i = 0; i < keyLen; i++) {
+      for (let j = 0; j < keyLen; j++) {
+        map[row + i][col + j] += key[i][j] * marker;
+      }
     }
-    checker.push(result);
+  };
+
+  // 자물쇠가 열렸는지 확인
+  const isUnlocked = () => {
+    for (let i = 0; i < lockLen; i++) {
+      for (let j = 0; j < lockLen; j++) {
+        if (map[offset + i][offset + j] % 2 == 0) return false;
+      }
+    }
+    return true;
+  };
+
+  // 전체적인 과정 진행.
+  for (let x = 0; x < 4; x++) {
+    for (let r = 0; r < limit; r++) {
+      for (let c = 0; c < limit; c++) {
+        markMap(r, c, 1);
+        if (isUnlocked()) return true;
+        markMap(r, c, -1);
+      }
+    }
+    key = rotate(key);
   }
-  return answer;
+
+  return false;
 };
