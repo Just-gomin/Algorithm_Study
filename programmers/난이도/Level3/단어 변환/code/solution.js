@@ -10,40 +10,63 @@
     5. 반환 할 수 없는 경우, 0을 반환합니다.
     
     # 문제 해결 방안
-    1. 현재 단어와 words의 단어들 중 문자가 하나만 변경되는 경우를 추출합니다.
-    2. 해당 단어들 중 target이 있다면, 현재 까지 거친 단계의 수를 반환합니다.
-    3. target이 존재하지 않는다면, 추출해 놓은 단어들 각각을 이용해서 위의 과정을 재 진행합니다. 
+    1. words 안에 target이 존재하지 않는 경우, 0을 반환합니다.
+    2. words의 단어들 사이에 한단계 변화로 만들어 질 수 있는 경우 간선으로 연결된 그래프를 생성합니다.
+    3. begin이 한단계 변화로 될 수 있는 단어들부터 출발하여 BFS를 진행합니다.
+    4. target에 도착하면 걸린 단계수를 반환합니다.
+    5. 진행할 수 있는 단계 수는 words의 길이입니다. 이를 초과하는 경우, 더이상 BFS를 진행하지 않습니다.
 */
 const solution = (begin = "", target = "", words = []) => {
-  let answer = 0;
-  if (words.indexOf(target) === -1) return answer;
+  let steps = 0;
+  const wordsNum = words.length;
+  const wordLen = begin.length;
+  const targIdx = words.indexOf(target);
 
-  const maxCount = words.length + 1;
+  if (targIdx === -1) return steps;
 
-  const change = (now = "", count = 0) => {
-    if (count > maxCount) return 9999;
-    else if (now === target) return count;
+  let graph = Array(wordsNum)
+    .fill(0)
+    .map((_) => []);
 
-    let candi = [];
-    words.forEach((word) => {
-      let diff = 0;
-      for (let i = 0; i < word.length; i++) {
-        if (now[i] !== word[i]) diff += 1;
+  for (let i = 0; i < wordsNum; i++) {
+    for (let j = 0; j < wordsNum; j++) {
+      if (i !== j) {
+        let diff = 0;
+        for (let k = 0; k < wordLen; k++) {
+          if (words[i][k] !== words[j][k]) diff += 1;
+        }
+        if (diff <= 1) graph[i].push(j);
       }
-      if (diff <= 1) candi.push(word);
-    });
-
-    if (candi.indexOf(target) !== -1) return count + 1;
-    else {
-      let min = 9999;
-      candi.forEach((word) => {
-        let result = change(word, count + 1);
-        if (min > result) min = result;
-      });
-      return min;
     }
+  }
+
+  const makeNode = (index = 0, count = 0) => {
+    return { index: index, count: count };
   };
 
-  answer = change(begin, 0);
-  return answer;
+  let queue = [];
+  words.forEach((word, index) => {
+    let diff = 0;
+    for (let i = 0; i < wordLen; i++) {
+      if (begin[i] !== word[i]) diff += 1;
+    }
+    if (diff <= 1) queue.splice(0, 0, makeNode(index, 1));
+  });
+
+  while (queue.length !== 0) {
+    let node = queue.pop();
+    if (node.index === targIdx) {
+      steps = node.count;
+      break;
+    }
+    if (node.count < wordsNum) {
+      graph[node.index].forEach((index) => {
+        queue.splice(0, 0, makeNode(index, node.count + 1));
+      });
+    }
+  }
+
+  return steps;
 };
+
+console.log(solution("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]));
