@@ -14,27 +14,51 @@
     2. 시작점인 "ICN"부터 dictionary에 접근해, 도착지들 중 하나를 뽑습니다.
     3. 도착지를 출발지로 하여 또 도착지들 중 하나를 선택해 여행 경로를 설계합니다.
     4. 위 2와 3의 과정을 반복하는 중 모든 티켓을 사용하지 않았는데 현 출발지로 부터 도착할 목적지가 존재하지 않는다면, 이전의 출발지로 돌아가 새로운 도착지를 탐색해 여행 경로를 설계합니다.
+
+    # 참고 링크
+    https://wwlee94.github.io/category/algorithm/bfs-dfs/travel-route/
 """
 
 
 def solution(tickets=[]):
     ticketsNum = len(tickets)
-    trip = ["ICN"]
-    tripCount = 0
     tickDict = {}
+    trip = ["ICN"]
 
-    tickets.sort(key=lambda ticket: ticket[2])
+    # 알파벳 순으로 앞선 경로 생성을 위한 정렬
+    tickets.sort(key=lambda ticket: ticket[1])
 
+    # 인접 리스트 형식의 graph 생성
     for ticket in tickets:
-        tickDict.setdefault(ticket[0], []).append([ticket[1], 0])
+        tickDict.setdefault(ticket[0], []).append(ticket[1])
+        tickDict.setdefault(ticket[1], [])
 
-    while tripCount < ticketsNum:
-        if len(tickDict[trip[tripCount]]) != 0:
-            pass
+    # DFS 진행, 여행 경로의 길이가 항공권의 수보다 작은 상황에서만 진행
+    while len(trip)-1 < ticketsNum:
+        dept = trip[-1]
+        # 출발지로 부터 갈 목적지가 남은 경우
+        if len(tickDict[dept]) != 0:
+            dest = tickDict[dept].pop(0)    # 갈 수 있는 목적지들 중 가장 앞에 있는 공항을 선택
+            trip.append(dest)               # trip에 추가
+
+        # 출발지로 부터 갈 목적지가 남지 않은 경우
         else:
-            destination = trip.pop()
-            departure = trip[len(trip-1)]
-            tripCount -= 1
-            tickDict[departure].append([destination, -1])
-
+            while True:
+                dest = trip.pop()               # 마지막 여행지를 다시 목적지 리스트로 넣기 위해 여행 경로상에서 제거
+                dept = trip[-1]                 # 마지막 출발지
+                tickDict[dept].append(dest)     # 마지막 출발지의 목적지에 다시 추가
+                if len(tickDict[dept]) != 1:
+                    break
     return trip
+
+
+example1 = [["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]]
+example2 = [["ICN", "SFO"], ["ICN", "ATL"], [
+    "SFO", "ATL"], ["ATL", "ICN"], ["ATL", "SFO"]]
+example3 = [["ICN", "AAA"], ["ICN", "BBB"], ["BBB", "ICN"]]
+example4 = [['ICN', 'B'], ['B', 'ICN'], ['ICN', 'A'], ['A', 'D'], ['D', 'A']]
+
+# print(solution(example1))
+# print(solution(example2))
+# print(solution(example3))
+print(solution(example4))
