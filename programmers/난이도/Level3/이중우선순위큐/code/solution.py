@@ -14,7 +14,7 @@
 
     # 문제 해결 방법
     1. 최대 Heap을 작성하여 연산을 처리합니다.
-    2. 
+    2. 큰 값은 부모로, 같은 높이의 형제 노드들 끼리는 작은 것이 오른쪽으로 가게 정렬 시킵니다.
 
     # 처음 생각으로는 연결리스트를 이용하는 것이 간단할 것 같았지만, 연산의 수량이 최대 1000000개 이기 때문에 연결 리스트를 사용한다면 탐색 시간이 너무도 길어질 것 같아 포기했습니다.
 """
@@ -22,7 +22,6 @@
 
 def solution(operations=[]):
     maxiHeap = []
-    mini = {"index": None, "value": None}
 
     def exchangeNode(idx1, idx2):
         temp = maxiHeap[idx1]
@@ -30,25 +29,28 @@ def solution(operations=[]):
         maxiHeap[idx2] = temp
 
     def heapify(index):
-        largest = index
         lchild = index*2 + 1
         rchild = index*2 + 2
 
-        if lchild < len(maxiHeap)-1 and maxiHeap[lchild] > maxiHeap[largest]:
-            largest = lchild
-        if rchild < len(maxiHeap)-1 and maxiHeap[rchild] > maxiHeap[largest]:
-            largest = rchild
+        if rchild < len(maxiHeap):
+            if maxiHeap[rchild] > maxiHeap[lchild]:
+                exchangeNode(lchild, rchild)
+            if maxiHeap[index] < maxiHeap[rchild]:
+                exchangeNode(index, lchild)
+                exchangeNode(lchild, rchild)
+                heapify(rchild)
+            elif maxiHeap[index] < maxiHeap[lchild]:
+                exchangeNode(index, lchild)
+                heapify(lchild)
+        elif lchild < len(maxiHeap):
+            if maxiHeap[index] < maxiHeap[lchild]:
+                exchangeNode(index, lchild)
+                heapify(lchild)
 
-        if largest != index:
-            exchangeNode(index, largest)
-            heapify(largest)
-
-    def heapInsert(value):
-        # if mini['value'] == None:
-        # mini['value'] = value
+    def heapIns(value):
         insertIdx = len(maxiHeap)
-        # mini['index'] = insertIdx
         maxiHeap.append(value)
+
         if insertIdx != 0:
             parentIdx = (len(maxiHeap)-1) // 2
             if maxiHeap[parentIdx] < maxiHeap[insertIdx]:
@@ -56,19 +58,41 @@ def solution(operations=[]):
                 for i in range(parentIdx, -1, -1):
                     heapify(i)
 
-    def heapDeleteMax():
+    def heapDelMax():
         exchangeNode(0, len(maxiHeap)-1)
         maxiHeap.pop()
         heapify(0)
+
+    def findMin():
+        mini = 0
+        while((2*mini + 2) < len(maxiHeap)):
+            mini = 2*mini + 2
+        if (2*mini + 1) < len(maxiHeap):
+            mini = 2*mini + 1
+        return mini
+
+    def heapDelMin():
+        mini = findMin()
+        exchangeNode(mini, len(maxiHeap)-1)
+        maxiHeap.pop()
 
     for op in operations:
         op = op.split(" ")
         cmd = op[0]
         data = int(op[1])
         if cmd == "I":
-            heapInsert(data)
-        else:
+            heapIns(data)
+        elif cmd == "D" and len(maxiHeap) != 0:
             if data == 1:
-                heapDeleteMax()
+                heapDelMax()
             else:
-                pass
+                heapDelMin()
+
+    return [0, 0] if len(maxiHeap) == 0 else [maxiHeap[0], maxiHeap[findMin()]]
+
+
+example1 = ["I 16", "D 1"]
+example2 = ["I 7", "I 5", "I -5", "D -1"]
+
+print(solution(example1))
+print(solution(example2))
