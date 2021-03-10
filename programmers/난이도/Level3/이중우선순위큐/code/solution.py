@@ -14,9 +14,10 @@
 
     # 문제 해결 방법
     1. 최대 Heap을 작성하여 연산을 처리합니다.
-    2. 큰 값은 부모로, 같은 높이의 형제 노드들 끼리는 작은 것이 오른쪽으로 가게 정렬 시킵니다.
+    2. 최소값을 찾을 때는 min함수를 이용해서 처리합니다.
 
     # 처음 생각으로는 연결리스트를 이용하는 것이 간단할 것 같았지만, 연산의 수량이 최대 1000000개 이기 때문에 연결 리스트를 사용한다면 탐색 시간이 너무도 길어질 것 같아 포기했습니다.
+    # 편법을 이용해 푼 것 같은 느낌이 듭니다. 다시 생각해보니 연결리스트로 해결하는 것도 나쁘지 않은 것 같습니다. 기존에 존재하는 데이터를 정렬시켜서 연결리스트를 생성하는 것도 아니며, 문제의 상황상 최대값과 최소값의 삭제는 바로바로 진행할 수 있습니다. 단지 데이터가 입력되면 알맞는 위치를 찾는 것까지가 오래 걸릴뿐인 듯 합니다. 연결리스트로 다시 풀어봐야할 것 같습니다.
 """
 
 
@@ -29,23 +30,18 @@ def solution(operations=[]):
         maxiHeap[idx2] = temp
 
     def heapify(index):
+        largest = index
         lchild = index*2 + 1
         rchild = index*2 + 2
 
-        if rchild < len(maxiHeap):
-            if maxiHeap[rchild] > maxiHeap[lchild]:
-                exchangeNode(lchild, rchild)
-            if maxiHeap[index] < maxiHeap[rchild]:
-                exchangeNode(index, lchild)
-                exchangeNode(lchild, rchild)
-                heapify(rchild)
-            elif maxiHeap[index] < maxiHeap[lchild]:
-                exchangeNode(index, lchild)
-                heapify(lchild)
-        elif lchild < len(maxiHeap):
-            if maxiHeap[index] < maxiHeap[lchild]:
-                exchangeNode(index, lchild)
-                heapify(lchild)
+        if lchild < len(maxiHeap) and maxiHeap[lchild] > maxiHeap[largest]:
+            largest = lchild
+        if rchild < len(maxiHeap) and maxiHeap[rchild] > maxiHeap[largest]:
+            largest = rchild
+
+        if largest != index:
+            exchangeNode(largest, index)
+            heapify(largest)
 
     def heapIns(value):
         insertIdx = len(maxiHeap)
@@ -63,18 +59,8 @@ def solution(operations=[]):
         maxiHeap.pop()
         heapify(0)
 
-    def findMin():
-        mini = 0
-        while((2*mini + 2) < len(maxiHeap)):
-            mini = 2*mini + 2
-        if (2*mini + 1) < len(maxiHeap):
-            mini = 2*mini + 1
-        return mini
-
     def heapDelMin():
-        mini = findMin()
-        exchangeNode(mini, len(maxiHeap)-1)
-        maxiHeap.pop()
+        maxiHeap.remove(min(maxiHeap))
 
     for op in operations:
         op = op.split(" ")
@@ -88,7 +74,7 @@ def solution(operations=[]):
             else:
                 heapDelMin()
 
-    return [0, 0] if len(maxiHeap) == 0 else [maxiHeap[0], maxiHeap[findMin()]]
+    return [0, 0] if len(maxiHeap) == 0 else [maxiHeap[0], min(maxiHeap)]
 
 
 example1 = ["I 16", "D 1"]
