@@ -9,7 +9,10 @@
     4. 유실된 경기결과로 인해 정확한 순위를 매길 수 없는 경우, 확실하게 순위를 매길 수 있는 선수들의 수를 반환합니다.
 
     # 문제 해결 방법
-    1. 
+    1. 주어진 정보들을 이용해서 인접 리스트 형식의 그래프를 생성합니다.
+    2. 1번 부터 n번까지 순회를 하며 등수를 정할 수 있는 선수들의 수를 셉니다.
+    3. 해당 process에 주어진 선수에 대하여 모든 조상의 수와 자손의 수를 셉니다.
+    4. 위에서 구한 수가 n-1인 경우 해당 선수는 등수를 확정 지을 수 있습니다.
 """
 
 
@@ -18,19 +21,33 @@ def solution(n=0, results=[]):
     parent = 'parent'
     child = 'child'
     diGraph = {i: {parent: [], child: []} for i in range(1, n+1)}
+    checker = [0 for _ in range(n+1)]
 
     def ancestors(player=0):
-        pass
+        count = 0
+        for ans in diGraph[player][parent]:
+            if checker[ans] == 0:
+                checker[ans] = 1
+                count += 1 + ancestors(ans)
+        return count
 
     def descendants(player=0):
-        pass
+        count = 0
+        for des in diGraph[player][child]:
+            if checker[des] == 0:
+                checker[des] = 1
+                count += 1 + descendants(des)
+        return count
 
     for winner, loser in results:
         diGraph[winner][child].append(loser)
         diGraph[loser][parent].append(winner)
 
     for player in range(1, n+1):
-        pass
+        ans = ancestors(player)
+        des = descendants(player)
+        answer += 1 if ans + des == n-1 else 0
+        checker = [0 for _ in range(n+1)]
 
     return answer
 
