@@ -27,28 +27,31 @@ def solution(genres=[], plays=[]):
     total_play = {}
     best2 = {}
 
-    for i, (genre, play) in enumerate(zip(genres, plays)):
-        if genre not in total_play:
-            total_play[genre] = play
-            best2[genre] = [[i, play]]
+    for i, (genre_info, play) in enumerate(zip(genres, plays)):
+        if genre_info not in total_play:
+            total_play[genre_info] = play
+            best2[genre_info] = [[i, play]]
         else:
-            total_play[genre] += play
-            if len(best2[genre]) < 2:
-                best2[genre].append([i, play])
+            total_play[genre_info] += play
+            if len(best2[genre_info]) < 2:
+                best2[genre_info].append([i, play])
             else:
-                low_block = best2[genre][0]
-                high_block = best2[genre][1]
+                low_block = best2[genre_info][0]
+                high_block = best2[genre_info][1]
                 if low_block[1] > high_block[1]:
                     low_block = high_block
+                elif low_block[1] == high_block[1]:
+                    low_block = low_block if low_block[0] < high_block[0] else high_block
 
                 if play > low_block[1]:
-                    best2[genre].remove(low_block)
-                    best2[genre].append([i, play])
+                    best2[genre_info].remove(low_block)
+                    best2[genre_info].append([i, play])
 
-    sorted_genres = sorted(total_play, key=lambda x: x[1], reverse=True)
-    for genre in sorted_genres:
-        best2[genre].sort(key=lambda x: x[1], reverse=True)
-        for block in best2[genre]:
+    sorted_genres = sorted(
+        total_play.items(), key=lambda x: x[1], reverse=True)
+    for genre_info in sorted_genres:
+        best2[genre_info[0]].sort(key=lambda x: x[1], reverse=True)
+        for block in best2[genre_info[0]]:
             answer.append(block[0])
 
     return answer
