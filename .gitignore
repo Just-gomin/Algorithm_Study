@@ -4,3 +4,7 @@ programmers/.vscode
 
 # Mac's service file
 .DS_Store
+
+# C Language Build Files
+*.out
+*.out.dSYM
