@@ -51,7 +51,7 @@ void arrList::del(int pos){
 }
 
 void arrList::access(int pos){
-    if(pos>list[0] + 1 || pos < 1){
+    if(pos>list[0] || pos < 1){
         cout << "범위를 벗어났습니다." << endl;
         return;
     }
