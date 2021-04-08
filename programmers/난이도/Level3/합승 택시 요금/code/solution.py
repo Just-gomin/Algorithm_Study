@@ -12,84 +12,45 @@
     3. a와 b의 택시 요금의 합이 최소가 되는 때의 택시 요금을 반환합니다.
 
     # 문제 해결 방법
-    1. 다익 스트라 알고리즘을 이용하여 최소 비용 트리를 생성합니다.
+    1. Floyd-Warshall 알고리즘을 이용하여 최소 비용 트리를 생성합니다.
     2. s->a , s->b의 경로를 기록하며 비용을 계산합니다.
     3. a와 b가 공유하는 구간의 비용을 계산합니다.
     4. 최소비용을 계산하여 반환합니다.
 
-    # dijkstra algorithm 부분을 수정합니다.
+    # dijkstra algorithm 부분을 수정합니다. -> Floyd-Warshall
+    # 참고 : https://yabmoons.tistory.com/622
+
+    # Dijkstra 풀이 -> 효율성 26번 실패
 """
-
-
-def dijkstra(n, fares, s):
-    loads = {}
-    for start, end, fare in fares:
-        loads.setdefault(start, []).append([end, fare])
-        loads.setdefault(end, []).append([start, fare])
-
-    for node in range(1, n+1):
-        loads[node] = sorted(loads[node], key=lambda x: x[1])
-
-    graph = {s: [[loads[s][0][0], loads[s][0][1]]],
-             loads[s][0][0]: []}
-    checker = [1 if node in graph.keys() else 0 for node in range(n+1)]
-    remain = n - 2
-    loads[start].pop(0)
-
-    while remain > 0:
-        min_node = 0
-        min_fare = 100000
-        for node in graph.keys():
-            while len(loads[node]) != 0:
-                if checker[loads[node][0][0]] == 1:
-                    loads[node].pop(0)
-                else:
-                    break
-            if len(loads[node]) != 0:
-                dest, fare = loads[node][0]
-                if fare < min_fare and checker[dest] != 1:
-                    min_fare = loads[node][0][1]
-                    min_node = node
-        checker[loads[min_node][0][0]] = 1
-        remain -= 1
-        graph[min_node].append(loads[min_node][0])
-        if loads[min_node][0][0] not in graph:
-            graph[loads[min_node][0][0]] = []
-        loads[min_node].pop(0)
-
-    return graph
-
-
-def get_fare(graph, start, dest):
-    info = [[start, 0]]
-    while info[-1][0] != dest:
-        start, fare = info[-1]
-        if len(graph[start]) < 1:
-            while len(graph[start]) <= 1:
-                info.pop()
-                start = info[-1][0]
-            temp = graph[start].pop(0)
-            graph[start].append(temp)
-        else:
-            info.append([graph[start][0][0], fare + graph[start][0][1]])
-
-    return info
 
 
 def solution(n=0, s=0, a=0, b=0, fares=[]):
 
-    graph = dijkstra(n, fares, s)
+    inf = float('inf')
+    answer = inf
 
-    a_info = get_fare(graph, s, a)
-    b_info = get_fare(graph, s, b)
+    graph = [[inf]*n for _ in range(n)]
 
-    share_fare = 0
-    for routeA, routeB in zip(a_info, b_info):
-        if routeA[0] == routeB[0]:
-            share_fare = routeA[1]
-        else:
-            break
-    return a_info[-1][1] + b_info[-1][1] - share_fare
+    # Make Graph
+    for f, t, fare in fares:
+        graph[f-1][t-1] = fare
+        graph[t-1][f-1] = fare
+
+    # Calculate fares between start and destination
+    for mid in range(n):
+        for f in range(n):
+            for t in range(n):
+                if f == t:
+                    graph[f][t] = 0
+                else:
+                    graph[f][t] = min(graph[f][t], graph[f]
+                                      [mid] + graph[mid][t])
+
+    for mid in range(n):
+        cost = graph[s-1][mid] + graph[mid][a-1] + graph[mid][b-1]
+        answer = cost if answer > cost else answer
+
+    return answer
 
 
 exTable = [
@@ -102,3 +63,6 @@ exTable = [
 
 for n, s, a, b, fares in exTable:
     print(solution(n, s, a, b, fares))
+
+# print(solution(6, 4, 6, 2, [[4, 1, 10], [3, 5, 24], [5, 6, 2], [3, 1, 41], [
+#     5, 1, 24], [4, 6, 50], [2, 4, 66], [2, 3, 22], [1, 6, 25]]))
