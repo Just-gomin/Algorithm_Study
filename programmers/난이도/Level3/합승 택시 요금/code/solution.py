@@ -20,7 +20,8 @@
     # dijkstra algorithm 부분을 수정합니다. -> Floyd-Warshall
     # 참고 : https://yabmoons.tistory.com/622
 
-    # Dijkstra 풀이 -> 효율성 26번 실패
+    # Dijkstra 풀이 -> 효율성 26번 실패 
+        => min function 대신 if문을 사용했더니 효율성이 절반이상 줄었습니다. 앞으로 min, max 사용에 좀더 주의를 기울여야할 것 같습니다.
 """
 
 
@@ -42,9 +43,8 @@ def solution(n=0, s=0, a=0, b=0, fares=[]):
             for t in range(n):
                 if f == t:
                     graph[f][t] = 0
-                else:
-                    graph[f][t] = min(graph[f][t], graph[f]
-                                      [mid] + graph[mid][t])
+                elif graph[f][t] > graph[f][mid] + graph[mid][t]:
+                    graph[f][t] = graph[f][mid] + graph[mid][t]
 
     for mid in range(n):
         cost = graph[s-1][mid] + graph[mid][a-1] + graph[mid][b-1]
