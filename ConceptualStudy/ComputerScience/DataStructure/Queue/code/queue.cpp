@@ -65,7 +65,7 @@ public:
     };
 
     T frontData(){
-        return q[tail];
+        return q[tail-1];
     };
 
     T rearData(){
