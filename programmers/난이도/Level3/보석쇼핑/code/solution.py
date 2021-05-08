@@ -7,31 +7,38 @@
 
     # 문제 해결 방법
     1. Set을 통해 보석의 종류들을 알아냅니다.
-    2. 진열장 기준 1번(인덱스 기준 0번) 부터 시작하여 모든 보석을 구매하는 가장 짧은 구간을 탐색합니다.
+    2. 진열대를 순회하며, {"보석":보석 위치 , ...} 와 같은 형의 바구니에 담으며 기록합니다.
+    3. 바구니의 길이가 보석의 종류와 같으면 해당 구간과 길이를 저장합니다.
+    4. 진열대의 마지막까지 진행하며 가장 짧은 구간을 탐색합니다.
+
+    # 효율성 마지막 테스트 케이스를 통과하지 못했습니다.
 """
 
 
 def solution(gems=[]):
     gem_list = set(gems)
-    start = 0
-    min_range={'length':len(gems) + 1, 'range': [1,1]}
 
-    while start < len(gems) - len(gem_list):
-        remain = list(gem_list)
-        i = start
+    if len(gem_list) == len(gems):
+        return [1, len(gems)]
 
-        while i < len(gems):
-            if gems[i] in remain:
-                remain.remove(gems[i])
-            
-            if len(remain) == 0:
-                if min_range['length'] > i - start + 1:
-                    min_range['length'] = i - start + 1
-                    min_range['range'] = [start + 1, i + 1]
-                break
+    basket = {}
+    min_info = {'length':len(gems)+1, 'section':[1,1]}
 
-            i += 1
-        
-        start += 1
+    for i, gem in enumerate(gems):
+        if gem in basket:
+            del basket[gem]
+
+        basket[gem] = i
+
+        if len(basket) == len(gem_list):
+            pos = list(basket.values())
+            start = pos[0]
+            fin = pos[-1]
+
+            if min_info['length'] > fin - start - 1:
+                min_info['length'] = fin - start - 1
+                min_info['section'] = [start + 1, fin + 1]
     
-    return  min_range['range']
+    return min_info['section']
+
+
