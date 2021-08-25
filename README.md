@@ -2,6 +2,8 @@
 
 꾸준한 Algorithm 공부를 위해서 만든 저장소입니다. 사용언어는 JavaScript(ES6) 및 Python(python3)입니다.
 
+<br>
+
 ## 저장소 구조
 
     ∟ 문제파일형식
@@ -21,7 +23,12 @@
                     ∟ concept.md
     ∟ README.md
 
+<br>
+<br>
+
 ## 문제풀이
+
+<br>
 
 ### 문제 풀이 형식( .js / .py ...)
 
@@ -44,6 +51,8 @@ const solution = (arg1, arg2) => {
 
 - 대부분의 파일에 적용이 되지 않은 사항으로 추후 문제를 다시 풀며 수정할 예정입니다. ( 2020.11.12 )
 
+<br>
+
 ### 문서 형식 (.md)
 
 ```markdown
@@ -51,6 +60,8 @@ const solution = (arg1, arg2) => {
 
 [Link](Link)
 ```
+
+<br>
 
 ### Commit Message 형식
 
@@ -63,7 +74,12 @@ const solution = (arg1, arg2) => {
 
 ---
 
+<br>
+<br>
+
 ## 개념 공부
+
+<br>
 
 ### 코드 구현 형식 ( .js / .py ...)
 
@@ -75,6 +91,8 @@ const concept = (arg1, arg2) => {
 };
 ```
 
+<br>
+
 ### 문서 형식 (.md)
 
 ```markdown
@@ -82,6 +100,8 @@ const concept = (arg1, arg2) => {
 
 [Notion 정리 주소](NotionLink)
 ```
+
+<br>
 
 ### Commit Message 형식
 
