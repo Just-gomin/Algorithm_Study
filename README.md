@@ -33,15 +33,6 @@
 ### 문제 풀이 형식( .js / .py ...)
 
 ```javascript
-/*
-    # 문제 해결 단서
-    1.
-    2.
-
-    # 문제 해결 방안
-    1.
-    2.
-*/
 const solution = (arg1, arg2) => {
   let answer;
   // code body;
@@ -58,7 +49,24 @@ const solution = (arg1, arg2) => {
 ```markdown
 # 문제 원문
 
-[Link](Link)
+[]()
+
+<br><br>
+
+# 문제 해결 단서
+
+1.
+2.
+
+<br><br>
+
+# 문제 해결 방법
+
+<br>
+
+## Python
+
+1.
 ```
 
 <br>
