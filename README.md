@@ -1,10 +1,26 @@
 # Algorithm_Study
 
-꾸준한 Algorithm 공부를 위해서 만든 저장소입니다. 사용언어는 JavaScript(ES6) 및 Python(python3)입니다.
+Algorithm 학습을 위한 저장소입니다.
 
-<br>
+</br>
 
-## 저장소 구조
+## 📔 스터디
+
+[![Let's Exit](https://img.shields.io/badge/Let's--Exit-바로가기-a?style=for-the-badge&logoColor=0f612d)](./GroupStudy/Let's_Exit/README.md)
+
+</br></br>
+
+## 📚 사용 언어 목록
+
+</br>
+
+[![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](./)
+[![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](./)
+[![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white)](./)
+
+</br></br>
+
+## 🗂 저장소 구조
 
     ∟ 문제파일형식
     ∟ 알고리즘 문제 사이트
@@ -23,12 +39,12 @@
                     ∟ concept.md
     ∟ README.md
 
-<br>
-<br>
+</br>
+</br>
 
-## 문제풀이
+## 📃 문제풀이
 
-<br>
+</br>
 
 ### 문제 풀이 형식( .js / .py ...)
 
@@ -42,7 +58,7 @@ const solution = (arg1, arg2) => {
 
 - 대부분의 파일에 적용이 되지 않은 사항으로 추후 문제를 다시 풀며 수정할 예정입니다. ( 2020.11.12 )
 
-<br>
+</br>
 
 ### 문서 형식 (.md)
 
@@ -51,25 +67,25 @@ const solution = (arg1, arg2) => {
 
 []()
 
-<br><br>
+</br></br>
 
 # 문제 해결 단서
 
 1.
 2.
 
-<br><br>
+</br></br>
 
 # 문제 해결 방법
 
-<br>
+</br>
 
 ## Python
 
 1.
 ```
 
-<br>
+</br>
 
 ### Commit Message 형식
 
@@ -82,12 +98,12 @@ const solution = (arg1, arg2) => {
 
 ---
 
-<br>
-<br>
+</br>
+</br>
 
-## 개념 공부
+## 📑 개념 공부
 
-<br>
+</br>
 
 ### 코드 구현 형식 ( .js / .py ...)
 
@@ -99,7 +115,7 @@ const concept = (arg1, arg2) => {
 };
 ```
 
-<br>
+</br>
 
 ### 문서 형식 (.md)
 
@@ -109,7 +125,7 @@ const concept = (arg1, arg2) => {
 [Notion 정리 주소](NotionLink)
 ```
 
-<br>
+</br>
 
 ### Commit Message 형식
 
