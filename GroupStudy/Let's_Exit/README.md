@@ -15,12 +15,12 @@
 ### 형식
 
 ```md
-## YYYY/MM/DD
+## YYYY/MM/DD (스터디 날짜)
 
 |사이트 | 번호 | 문제 이름 | 난이도 | 풀이 |
 |:------:|:------:|:----:|:---------:|:---------:|
-|[BaekJoon](https://www.acmicpc.net/)| [번호](번호링크) | [문제](문제링크)| [번호](링크)| [문제이름](문제링크) |  난이도 | [풀이](풀이링크) |
-|[Programmers](https://programmers.co.kr/)| [번호](번호링크) | [문제](문제링크)| [번호](링크)| [문제이름](문제링크) |  난이도 | [풀이](풀이링크) |
-|[LeetCode](https://leetcode.com/)| [번호](번호링크) | [문제](문제링크)| [번호](링크)| [문제이름](문제링크) |  난이도 | [풀이](풀이링크) |
-|[SW Expert Academy](https://swexpertacademy.com/main/main.do)| [번호](번호링크) | [문제](문제링크)| [번호](링크)| [문제이름](문제링크) |  난이도 | [풀이](풀이링크) |
+|[BaekJoon](https://www.acmicpc.net/)| [번호](번호링크) | [문제](문제링크)|  난이도 | [풀이](풀이링크) |
+|[Programmers](https://programmers.co.kr/)| [번호](번호링크) | [문제](문제링크)|  난이도 | [풀이](풀이링크) |
+|[LeetCode](https://leetcode.com/)| [번호](번호링크) | [문제](문제링크)|  난이도 | [풀이](풀이링크) |
+|[SW Expert Academy](https://swexpertacademy.com/main/main.do)| [번호](번호링크) | [문제](문제링크)|  난이도 | [풀이](풀이링크) |
 ```
