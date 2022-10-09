@@ -16,17 +16,21 @@
 
 
 def solution(N=0, stages=[]):
-    challengers = [0 for _ in range(N+1)]
-    reachers = [0 for _ in range(N+1)]
+    challengers = [0 for _ in range(N + 1)]
+    reachers = [0 for _ in range(N + 1)]
     rateFailure = []
     for stage in stages:
-        challengers[stage-1] += 1
+        challengers[stage - 1] += 1
         for i in range(stage):
             reachers[i] += 1
 
     for i in range(N):
         rateFailure.append(
-            {"stage": i+1, "rate": 0 if reachers[i] == 0 else challengers[i]/reachers[i]})
-    rateFailure.sort(key=lambda info: (-info['rate'], info['stage']))
-    answer = [info['stage'] for info in rateFailure]
+            {
+                "stage": i + 1,
+                "rate": 0 if reachers[i] == 0 else challengers[i] / reachers[i],
+            }
+        )
+    rateFailure.sort(key=lambda info: (-info["rate"], info["stage"]))
+    answer = [info["stage"] for info in rateFailure]
     return answer
