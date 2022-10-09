@@ -1,8 +1,5 @@
-## YYYY/MM/DD
+## 2022/10/13
 
 |사이트 | 번호 | 문제 이름 | 난이도 | 풀이 |
 |:------:|:------:|:----:|:---------:|:---------:|
-|[BaekJoon](https://www.acmicpc.net/)| [번호](번호링크) | [문제](문제링크)| [번호](링크)| [문제이름](문제링크) |  난이도 | [풀이](풀이링크) |
-|[Programmers](https://programmers.co.kr/)| [번호](번호링크) | [문제](문제링크)| [번호](링크)| [문제이름](문제링크) |  난이도 | [풀이](풀이링크) |
-|[LeetCode](https://leetcode.com/)| [번호](번호링크) | [문제](문제링크)| [번호](링크)| [문제이름](문제링크) |  난이도 | [풀이](풀이링크) |
-|[SW Expert Academy](https://swexpertacademy.com/main/main.do)| [번호](번호링크) | [문제](문제링크)| [번호](링크)| [문제이름](문제링크) |  난이도 | [풀이](풀이링크) |
+|[Programmers](https://programmers.co.kr/)| - | [약수의 개수와 덧셈](https://school.programmers.co.kr/learn/courses/30/lessons/77884)|  Lv.1 | [풀이](../../Programmers/난이도/Level1/%EC%95%BD%EC%88%98%EC%9D%98%20%EA%B0%9C%EC%88%98%EC%99%80%20%EB%8D%A7%EC%85%88/) |
