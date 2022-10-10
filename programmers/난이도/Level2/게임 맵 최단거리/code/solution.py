@@ -4,47 +4,38 @@ from collections import deque
 def solution(maps=[]):
     n = len(maps)
     m = len(maps[0])
+    queue = deque([[0, 0]])
 
-    visited = [[False for _ in range(m)] for __ in range(n)]
-    queue = deque()
-
-    # 시작점, 방문 횟수 0
-    queue.append([0, 0, 1])
+    # 상하좌우
+    diff = [[-1, 0], [1, 0], [0, -1], [0, 1]]
 
     # BFS
     while queue:
         v = queue.popleft()
         x = v[0]
         y = v[1]
-        count = v[2]
 
-        # 방문 처리
-        visited[x][y] = True
+        for d in diff:
+            nx = x + d[0]
+            ny = y + d[1]
 
-        # 남쪽 확인
-        if (x + 1 < n) and (not visited[x + 1][y]) and (maps[x + 1][y] != 0):
-            if x + 1 == n - 1 and y == m - 1:
-                return count + 1
-            else:
-                queue.append([x + 1, y, count + 1])
-        # 동쪽 확인
-        if (y + 1 < m) and (not visited[x][y + 1]) and (maps[x][y + 1] != 0):
-            if x == n - 1 and y + 1 == m - 1:
-                return count + 1
-            else:
-                queue.append([x, y + 1, count + 1])
-        # 북쪽 확인
-        if (x - 1 >= 0) and (not visited[x - 1][y]) and (maps[x - 1][y] != 0):
-            if x - 1 == n - 1 and y == m - 1:
-                return count + 1
-            else:
-                queue.append([x - 1, y, count + 1])
-        # 서쪽 확인
-        if (y - 1 >= 0) and (not visited[x][y - 1]) and (maps[x][y - 1] != 0):
-            if x == n - 1 and y - 1 == m - 1:
-                return count + 1
-            else:
-                queue.append([x, y - 1, count + 1])
+            # 갈 수 있는 좌표인지 확인
+            if not (nx >= 0 and nx < n) or not (ny >= 0 and ny < m):
+                continue
+
+            # 이미 방문한 좌표인지 혹은 벽인지 확인
+            if maps[nx][ny] != 1:
+                continue
+
+            # 이동할 점이 목표 지점이라면 경로의 길이 반환
+            if nx == n - 1 and ny == m - 1:
+                return maps[x][y] + 1
+
+            # 방문할 좌표 추가
+            queue.append([nx, ny])
+
+            # 방문할 좌표에 대해 경로 길이 갱신
+            maps[nx][ny] = maps[x][y] + 1
 
     return -1
 
