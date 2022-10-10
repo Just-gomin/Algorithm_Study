@@ -60,29 +60,28 @@ const solution = (arg1, arg2) => {
 
 </br>
 
-### 문서 형식 (.md)
+### 문서 형식 (README.md)
 
 ```markdown
-# 문제 원문
+# Problem Titile
+
+## 문제 원문
 
 []()
 
 </br></br>
 
-# 문제 해결 단서
+## 문제 해결 단서
 
 1.
 2.
 
 </br></br>
 
-# 문제 해결 방법
-
-</br>
-
-## Python
+## 문제 해결 방법
 
 1.
+
 ```
 
 </br>
