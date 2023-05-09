@@ -1,0 +1,12 @@
+{
+  "name": "algorithm_js_playground",
+  "version": "1.0.0",
+  "description": "JS Playground for Algorithm Study",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "RUNNING_ON=local node index.js"
+  },
+  "author": "Kangmin An",
+  "license": "MIT"
+}
