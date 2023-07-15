@@ -3,7 +3,7 @@ const fs = require("fs");
 const { exit } = require("process");
 
 // 입력값 파일 경로 결정
-// node 실행 시 환경변수 [RUNNING_ON]을 "my"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
+// node 실행 시 환경변수 [RUNNING_ON]을 "local"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
 const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
 
 // 한줄 입력
