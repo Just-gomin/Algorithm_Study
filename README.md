@@ -6,7 +6,9 @@ Algorithm 학습을 위한 저장소입니다.
 
 ## 📔 스터디
 
-[![Let's Exit](https://img.shields.io/badge/Let's--Exit-바로가기-a?style=for-the-badge&logoColor=0f612d)](./GroupStudy/Let's_Exit/README.md)
+![Static Badge](https://img.shields.io/badge/%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0-grey?style=for-the-badge&label=let's%20exit&labelColor=blue&link=https%3A%2F%2Fgithub.com%2FJust-gomin%2FAlgorithm_Study%2Ftree%2Fmaster%2FGroupStudy%2FLet's_Exit)
+
+![Static Badge](https://img.shields.io/badge/%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0-grey?style=for-the-badge&label=javascript%20algorithm&labelColor=yellow&link=https%3A%2F%2Fwww.notion.so%2Fjust-gomin%2FJavascript-Study-c7bec2f769fd4a02bf32a410e4da03e3%3Fpvs%3D4)
 
 </br></br>
 
@@ -26,10 +28,7 @@ Algorithm 학습을 위한 저장소입니다.
     ∟ 알고리즘 문제 사이트
         ∟ 문제 분류
             ∟ 문제 이름
-                ∟ code
-                    ∟ solution
-                ∟ doc
-                    ∟ question.md
+                ∟ solution.xx
     ∟ 알고리즘 개념 공부
         ∟ 개념 분류
             ∟ 세부 내용
@@ -49,49 +48,28 @@ Algorithm 학습을 위한 저장소입니다.
 ### 문제 풀이 형식( .js / .py ...)
 
 ```javascript
-const solution = (arg1, arg2) => {
-  let answer;
-  // code body;
+/*
+  - 문제 Link : 
+*/
+
+function solution() {
+  let answer = "";
+  // code body.
   return answer;
-};
+}
 ```
 
 - 대부분의 파일에 적용이 되지 않은 사항으로 추후 문제를 다시 풀며 수정할 예정입니다. ( 2020.11.12 )
-
-</br>
-
-### 문서 형식 (README.md)
-
-```markdown
-# Problem Titile
-
-## 문제 원문
-
-[]()
-
-</br></br>
-
-## 문제 해결 단서
-
-1.
-2.
-
-</br></br>
-
-## 문제 해결 방법
-
-1.
-
-```
+- [백준](https://www.acmicpc.net/) 문제의 경우, 입출력 받는 코드들 포함시켜 정리 해두었습니다. [참고](./BaekJoon/Playground/js_playground)
 
 </br>
 
 ### Commit Message 형식
 
-    연.월.일_알고리즘 문제 사이트_문제이름(시도차수(-해결),언어)
+    알고리즘 문제 사이트_문제이름(시도차수(-해결),언어)
 
-    ex) 2021.01.01_Programmers_행렬의 곱셈(1차시도,JavaScript)
-        2021.01.01_Programmers_행렬의 곱셈(2차시도-해결,Python)
+    ex) Programmers_행렬의 곱셈(1차시도,JavaScript)
+        Programmers_행렬의 곱셈(2차시도-해결,Python)
 
 - 2021.01.08 이전에 Commit된 문제 풀이들은 JavaScript로 해결한 문제들입니다. ( 2021.01.08 )
 
