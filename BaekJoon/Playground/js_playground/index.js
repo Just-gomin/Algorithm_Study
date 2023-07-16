@@ -6,46 +6,52 @@ const { exit } = require("process");
 // node 실행 시 환경변수 [RUNNING_ON]을 "local"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
 const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
 
-// 한줄 입력
-// const input = fs.readFileSync(filePath).toString();
+// 입력 값
+const input = fs.readFileSync(filePath).toString().split("\n");
 
-// 첫 번째 줄에는 입력 값의 길이, 두 번째 줄부터 실제 데이터
-const [n, ...input] = fs.readFileSync(filePath).toString().split("\n");
+function solution(data) {
+  /*
+    Code Body
+  */
+  let parenthesis = data.split("");
 
-var stack = [];
-var answer = []; // console.log 는 시간을 많이 소모 하는 명령이기 때문에 정답을 모아놓았다가, 한번에 출력하기 위함
+  if (parenthesis.length % 2 == 1) {
+    return "NO";
+  }
 
-function stackMethod(command, value = 0) {
-  switch (command) {
-    case "push":
-      stack.push(value);
-      break;
-    case "pop":
-      if (stack.length === 0) {
-        answer.push(-1);
-      } else {
-        var poppedVale = stack.pop(value);
-        answer.push(poppedVale);
-      }
-      break;
-    case "size":
-      answer.push(stack.length);
-      break;
-    case "empty":
-      answer.push(stack.length === 0 ? 1 : 0);
-      break;
-    case "top":
-      answer.push(stack.length === 0 ? -1 : stack[stack.length - 1]);
-      break;
+  let stack = [];
+  let remain = [];
+
+  parenthesis.map((item) => {
+    if (item == "(") {
+      stack.push(item);
+    } else if (
+      item == ")" &&
+      stack.length != 0 &&
+      stack[stack.length - 1] == "("
+    ) {
+      stack.pop();
+    } else {
+      remain.push(item);
+    }
+  });
+
+  if (stack.length == 0 && remain.length == 0) {
+    return "YES";
+  } else {
+    return "NO";
   }
 }
 
-for (var key in input) {
-  var curCommand = input[key];
+function main(input) {
+  const [n, ...data] = input;
 
-  const [cmd, val] = curCommand.split(" ");
+  let answer = []; // console.log 는 시간을 많이 소모 하는 명령이기 때문에 정답을 모아놓았다가, 한번에 출력하기 위함
 
-  stackMethod(cmd, val);
+  for (let i = 0; i < n; i++) {
+    answer.push(solution(data[i]));
+  }
+  console.log(answer.join("\n"));
 }
 
-console.log(answer.join("\n"));
+main(input);
