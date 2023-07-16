@@ -6,9 +6,9 @@ Algorithm 학습을 위한 저장소입니다.
 
 ## 📔 스터디
 
-![Static Badge](https://img.shields.io/badge/%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0-grey?style=for-the-badge&label=let's%20exit&labelColor=blue&link=https%3A%2F%2Fgithub.com%2FJust-gomin%2FAlgorithm_Study%2Ftree%2Fmaster%2FGroupStudy%2FLet's_Exit)
+[![Static Badge](https://img.shields.io/badge/%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0-grey?style=for-the-badge&label=let's%20exit&labelColor=blue)](https://www.notion.so/just-gomin/Let-s-EXIT-ab1933af0bac4e05a0d278eddce9e5ca?pvs=4)
 
-![Static Badge](https://img.shields.io/badge/%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0-grey?style=for-the-badge&label=javascript%20algorithm&labelColor=yellow&link=https%3A%2F%2Fwww.notion.so%2Fjust-gomin%2FJavascript-Study-c7bec2f769fd4a02bf32a410e4da03e3%3Fpvs%3D4)
+[![Static Badge](https://img.shields.io/badge/%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0-grey?style=for-the-badge&label=javascript%20algorithm&labelColor=yellow)](https://www.notion.so/just-gomin/Javascript-Study-c7bec2f769fd4a02bf32a410e4da03e3?pvs=4)
 
 </br></br>
 
