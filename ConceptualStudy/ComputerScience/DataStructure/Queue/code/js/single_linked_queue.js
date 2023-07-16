@@ -30,7 +30,7 @@ class Queue {
 
   dequeue() {
     if (this.size === 0) {
-      return -1;
+      return null;
     }
 
     let value = this.head.value;
@@ -43,7 +43,7 @@ class Queue {
 
   front() {
     if (this.size < 1) {
-      return -1;
+      return null;
     }
 
     return this.head.value;
@@ -51,10 +51,14 @@ class Queue {
 
   back() {
     if (this.size < 1) {
-      return -1;
+      return null;
     }
 
     return this.tail.value;
+  }
+
+  empty() {
+    return this.size === 0;
   }
 }
 
