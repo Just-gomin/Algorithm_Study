@@ -13,34 +13,6 @@ function solution(data) {
   /*
     Code Body
   */
-  let parenthesis = data.split("");
-
-  if (parenthesis.length % 2 == 1) {
-    return "NO";
-  }
-
-  let stack = [];
-  let remain = [];
-
-  parenthesis.map((item) => {
-    if (item == "(") {
-      stack.push(item);
-    } else if (
-      item == ")" &&
-      stack.length != 0 &&
-      stack[stack.length - 1] == "("
-    ) {
-      stack.pop();
-    } else {
-      remain.push(item);
-    }
-  });
-
-  if (stack.length == 0 && remain.length == 0) {
-    return "YES";
-  } else {
-    return "NO";
-  }
 }
 
 function main(input) {
