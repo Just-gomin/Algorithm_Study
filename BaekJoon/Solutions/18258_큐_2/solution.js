@@ -41,7 +41,15 @@ class Queue {
     }
 
     let value = this.head.value;
-    this.head = this.head.next;
+
+    if (this.size > 2) {
+      this.head = this.head.next;
+    } else if (this.size == 2) {
+      this.head = this.tail;
+    } else {
+      this.head = null;
+      this.tail = null;
+    }
 
     this.size -= 1;
 
