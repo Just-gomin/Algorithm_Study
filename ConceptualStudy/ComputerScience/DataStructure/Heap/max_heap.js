@@ -10,7 +10,7 @@ class MaxHeap {
 
   // 최대 값 출력
   top() {
-    if (this.size() < 0) {
+    if (this.size() < 1) {
       throw Error("Heap is empty.");
     }
 
