@@ -19,17 +19,18 @@ class MaxHeap {
 
   // 부모 노드와 자식 노드의 값 교환
   swap(idx, childIdx) {
-    var temp = this.data[idx];
-    this.data[idx] = this.data[childIdx];
-    this.data[childIdx] = temp;
+    [this.data[idx], this.data[childIdx]] = [
+      this.data[childIdx],
+      this.data[idx],
+    ];
   }
 
   // Heap의 성질을 유지 시키는 정렬 함수
   heapify(index) {
-    var leftChildIdx = index * 2;
-    var rightChildIdx = leftChildIdx + 1;
+    let leftChildIdx = index * 2;
+    let rightChildIdx = leftChildIdx + 1;
 
-    var biggestIdx = index;
+    let biggestIdx = index;
 
     if (
       leftChildIdx <= this.size() &&
@@ -47,52 +48,53 @@ class MaxHeap {
 
     if (index != biggestIdx) {
       this.swap(index, biggestIdx);
+      return biggestIdx;
     }
   }
 
   // 아래에서 위로 올라가며 heapify 진행
-  heapifyDownToUp(index) {
+  heapifyUp(index) {
     if (index > this.size())
       throw Error("Given index is bigger than heap size.");
 
     if (index < 1) return;
 
     this.heapify(index);
-    this.heapifyDownToUp(parseInt(index / 2));
+    this.heapifyUp(parseInt(index / 2));
   }
 
   // 위에서 아래로 내려가며 heapify 진행
-  heapifyUpToDown(index) {
+  heapifyDown(index) {
     if (index < 1) throw Error("Given index must be bigger than 0.");
 
     if (index > this.size()) return;
 
-    this.heapify(index);
-    this.heapifyUpToDown(index * 2);
+    let nextIdx = this.heapify(index);
+    if (nextIdx != index) this.heapifyDown(nextIdx);
   }
 
   // 값 추가
   insert(value) {
     this.data.push(value);
-    this.heapifyDownToUp(this.size());
+    this.heapifyUp(this.size());
   }
 
   // 최대 값을 삭제하고 heapify 진행
   delete() {
-    var size = this.size();
+    let size = this.size();
 
     if (size < 1) {
       throw Error("Heap is empty.");
     } else if (size == 1) {
       return this.data.pop();
     } else {
-      var result = this.data[1];
+      let result = this.data[1];
 
       this.swap(1, this.size());
 
       this.data.pop();
 
-      this.heapifyUpToDown(1);
+      this.heapifyDown(1);
 
       return result;
     }
@@ -100,14 +102,14 @@ class MaxHeap {
 }
 
 function main() {
-  var heap = new MaxHeap();
+  let heap = new MaxHeap();
 
   for (let i = 0; i < 10; i++) {
     heap.insert(i);
     console.log(heap.data);
   }
 
-  for (let i = 0; i < 11; i++) {
+  for (let i = 0; i < 9; i++) {
     heap.delete();
     console.log(heap.data);
   }
