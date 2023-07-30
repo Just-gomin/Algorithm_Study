@@ -1,13 +1,38 @@
-// Read Inputs (from. https://help.acmicpc.net/language/info [node.js & TypeScript])
-const fs = require("fs");
-const { exit } = require("process");
+// ------------------------------
+// Input with File System
+// ------------------------------
 
-// 입력값 파일 경로 결정
-// node 실행 시 환경변수 [RUNNING_ON]을 "local"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
-const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
+// // Read Inputs (from. https://help.acmicpc.net/language/info [node.js & TypeScript])
+// const fs = require("fs");
+// const { exit } = require("process");
 
-// 입력 값
-const [nStr, ...inputs] = fs.readFileSync(filePath).toString().split("\n");
+// // 입력값 파일 경로 결정
+// // node 실행 시 환경변수 [RUNNING_ON]을 "local"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
+// const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
+
+// // 입력 값
+// const input = fs.readFileSync(filePath).toString().split("\n");
+
+// ------------------------------
+// Input with Read Line
+// ------------------------------
+
+// Read Inputs (from. https://velog.io/@leenzy/readline-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
+const readline = require("redaline");
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+rl.on("line", (line) => {
+  /*입력받는 값을 처리하는 코드*/
+  rl.close();
+});
+
+rl.on("close", () => {
+  /*입력이 끝나고 실행할 코드*/
+  process.exit();
+});
 
 class MinHeap {
   constructor() {
