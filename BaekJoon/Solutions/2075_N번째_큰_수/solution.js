@@ -2,10 +2,11 @@
   - 문제 Link : https://www.acmicpc.net/problem/2075
 */
 
-const fs = require("fs");
-const { exit } = require("process");
-const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
-const [nStr, ...inputs] = fs.readFileSync(filePath).toString().split("\n");
+const readline = require("readline");
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
 class MinHeap {
   constructor() {
@@ -19,7 +20,7 @@ class MinHeap {
 
   // 최소 값 출력
   top() {
-    if (this.size() < 0) {
+    if (this.size() < 1) {
       throw Error("Heap is empty.");
     }
 
@@ -110,22 +111,31 @@ class MinHeap {
   }
 }
 
-let n = parseInt(nStr);
-
-let answer = 0;
+let count = -1;
+let n = 0;
 
 let heap = new MinHeap();
 
-for (let i = 0; i < n; i++) {
-  let nums = inputs[i].split(" ");
+rl.on("line", (line) => {
+  if (count === -1) {
+    n = parseInt(line.trim());
+  } else {
+    line
+      .trim()
+      .split(" ")
+      .forEach((element) => {
+        heap.insert(parseInt(element));
+        if (heap.size() > n) heap.delete();
+      });
+  }
 
-  nums.map((v) => {
-    heap.insert(parseInt(v));
+  count++;
 
-    if (heap.size() > n) heap.delete();
-  });
-}
+  if (count === n) rl.close();
+});
 
-answer = heap.delete();
+rl.on("close", () => {
+  console.log(heap.delete());
 
-console.log(answer);
+  process.exit();
+});

@@ -24,16 +24,6 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-rl.on("line", (line) => {
-  /*입력받는 값을 처리하는 코드*/
-  rl.close();
-});
-
-rl.on("close", () => {
-  /*입력이 끝나고 실행할 코드*/
-  process.exit();
-});
-
 class MinHeap {
   constructor() {
     this.data = [null];
@@ -46,7 +36,7 @@ class MinHeap {
 
   // 최소 값 출력
   top() {
-    if (this.size() < 0) {
+    if (this.size() < 1) {
       throw Error("Heap is empty.");
     }
 
@@ -137,22 +127,31 @@ class MinHeap {
   }
 }
 
-let n = parseInt(nStr);
-
-let answer = 0;
+let count = -1;
+let n = 0;
 
 let heap = new MinHeap();
 
-for (let i = 0; i < n; i++) {
-  let nums = inputs[i].split(" ");
+rl.on("line", (line) => {
+  if (count === -1) {
+    n = parseInt(line.trim());
+  } else {
+    line
+      .trim()
+      .split(" ")
+      .forEach((element) => {
+        heap.insert(parseInt(element));
+        if (heap.size() > n) heap.delete();
+      });
+  }
 
-  nums.map((v) => {
-    heap.insert(parseInt(v));
+  count++;
 
-    if (heap.size() > n) heap.delete();
-  });
-}
+  if (count === n) rl.close();
+});
 
-answer = heap.delete();
+rl.on("close", () => {
+  console.log(heap.delete());
 
-console.log(answer);
+  process.exit();
+});
