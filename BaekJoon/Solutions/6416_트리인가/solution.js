@@ -1,5 +1,6 @@
 /*
   - 문제 Link : https://www.acmicpc.net/problem/6416
+  - 풀이 참고 Link : https://velog.io/@pss407/%EB%B0%B1%EC%A4%806416-%ED%8A%B8%EB%A6%AC%EC%9D%B8%EA%B0%80
 */
 
 const fs = require("fs");
