@@ -1,10 +1,10 @@
 # 문제 원문
 
-[https://www.acmicpc.net/problem/2581](https://www.acmicpc.net/problem/2581)
+<https://www.acmicpc.net/problem/2581>
 
 <br><br>
 
-# 문제 해결 단서
+## 문제 해결 단서
 
 1. 자연수 M과 N이 주어집니다.
 2. M이상 N이하인 자연수들 중 소수를 찾아냅니다.
@@ -12,7 +12,7 @@
 
 <br><br>
 
-# 문제 해결 방법
+## 문제 해결 방법
 
 <br>
 
