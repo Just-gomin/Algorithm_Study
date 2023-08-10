@@ -39,14 +39,14 @@ function solution(input) {
   const edges = input.slice(1, n);
   const queries = input.slice(n + 1);
 
-  const adjeacencyList = [...Array(n + 1)].map(() => []);
+  const adjeacencyList = [...Array(n + 1)].fill(0);
 
   for (let edge of edges) {
     let a = +(edge.split(' ')[0]);
     let b = +(edge.split(' ')[1]);
 
-    adjeacencyList[a].push(b);
-    adjeacencyList[b].push(a);
+    adjeacencyList[a]++;
+    adjeacencyList[b]++;
   }
 
   for (let query of queries) {
@@ -54,7 +54,7 @@ function solution(input) {
     let k = +(query.split(' ')[1]);
 
     if (t === 1) {
-      answer.push(adjeacencyList[k].length !== 1 ? yes : no);
+      answer.push(adjeacencyList[k] !== 1 ? yes : no);
     } else if (t === 2) {
       answer.push(yes);
     } else {

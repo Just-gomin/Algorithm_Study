@@ -15,7 +15,7 @@ const input = fs
   .split("\n")
   .map((v) => v.trim());
 
-function solution(input) {
+function solutionOld(input) {
   let answer = [];
 
   const yes = "yes";
@@ -41,6 +41,44 @@ function solution(input) {
 
     if (t === 1) {
       answer.push(adjeacencyList[k].length !== 1 ? yes : no);
+    } else if (t === 2) {
+      answer.push(yes);
+    } else {
+      console.log("질의 오류 t가 1이나 2가 아닙니다.");
+    }
+  }
+
+
+  return answer.join("\n");
+}
+
+// 기존 풀이 속도 개선
+function solution(input) {
+  let answer = [];
+
+  const yes = "yes";
+  const no = "no";
+
+  const n = +input[0];
+  const edges = input.slice(1, n);
+  const queries = input.slice(n + 1);
+
+  const adjeacencyList = [...Array(n + 1)].fill(0);
+
+  for (let edge of edges) {
+    let a = +(edge.split(' ')[0]);
+    let b = +(edge.split(' ')[1]);
+
+    adjeacencyList[a]++;
+    adjeacencyList[b]++;
+  }
+
+  for (let query of queries) {
+    let t = +(query.split(' ')[0]);
+    let k = +(query.split(' ')[1]);
+
+    if (t === 1) {
+      answer.push(adjeacencyList[k] !== 1 ? yes : no);
     } else if (t === 2) {
       answer.push(yes);
     } else {
