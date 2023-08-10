@@ -30,32 +30,34 @@ const input = fs
 // });
 
 function solution(input) {
-  let answer = 0;
+  const [m, n] = [+(input[0]), +(input[1])];
 
-  const numbers = input[1].split(' ').map((v) => +v);
+  let sum = 0;
+  let min = -1;
 
   const isPrime = (num) => {
-    if (num === 1) return 0;
+    if (num === 1) return false;
 
     let divider = 2;
     const limit = Math.sqrt(num);
 
     while (divider <= limit) {
-      if (num % divider === 0) {
-        return 0;
-      }
-
+      if (num % divider === 0) return false;
       divider++;
     }
 
-    return 1;
+    return true;
   }
 
-  for (let num of numbers) {
-    answer += isPrime(num);
+  for (let num = m; num <= n; num++) {
+    if (isPrime(num)) {
+      sum += num;
+      if (min === -1) min = num;
+    }
   }
 
-  return answer;
+  if (sum === 0) return -1;
+  else return `${sum}\n${min}`;
 }
 
 console.log(solution(input));
