@@ -1,33 +1,19 @@
-// ------------------------------
-// Input with File System
-// ------------------------------
+/*
+  - 문제 Link : https://www.acmicpc.net/problem/14675
 
-// Read Inputs (from. https://help.acmicpc.net/language/info [node.js & TypeScript])
+  - 단절점이 되는 정점들: 리프 노드가 아닌 경우는 모두 단절점 가능 (리프 노드: 인접 노드가 한 개)
+  - 단절선이 된는 간선들: 입력이 트리인 경우 어느 간선을 자르던 해당 트리는 모두 2개 이상으로 나뉜다
+*/
+
 const fs = require("fs");
 const { exit } = require("process");
-
-// 입력값 파일 경로 결정
-// node 실행 시 환경변수 [RUNNING_ON]을 "local"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
 const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
-
-// 입력 값
 const input = fs
   .readFileSync(filePath)
   .toString()
   .trim()
   .split("\n")
   .map((v) => v.trim());
-
-// ------------------------------
-// Input with Read Line
-// ------------------------------
-
-// // Read Inputs (from. https://velog.io/@leenzy/readline-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
-// const readline = require("readline");
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
 
 function solution(input) {
   let answer = [];
