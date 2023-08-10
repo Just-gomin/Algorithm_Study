@@ -1,10 +1,10 @@
-# 문제 원문
+# 1978 소수 찾기
 
-[https://www.acmicpc.net/problem/1978](https://www.acmicpc.net/problem/1978)
+문제 원문: <https://www.acmicpc.net/problem/1978>
 
 <br><br>
 
-# 문제 해결 단서
+## 문제 해결 단서
 
 1. 주어진 수 N개 중에서 소수가 몇개인지 찾아냅니다. (1 <= N <= 100)
 2. 주어진 수는 1000 이하의 자연수 입니다.
@@ -12,7 +12,7 @@
 
 <br><br>
 
-# 문제 해결 방법
+## 문제 해결 방법
 
 <br>
 
