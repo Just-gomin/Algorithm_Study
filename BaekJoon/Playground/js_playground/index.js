@@ -30,40 +30,32 @@ const input = fs
 // });
 
 function solution(input) {
-  let answer = [];
+  let answer = 0;
 
-  const yes = "yes";
-  const no = "no";
+  const numbers = input[1].split(' ').map((v) => +v);
 
-  const n = +input[0];
-  const edges = input.slice(1, n);
-  const queries = input.slice(n + 1);
+  const isPrime = (num) => {
+    if (num === 1) return 0;
 
-  const adjeacencyList = [...Array(n + 1)].fill(0);
+    let divider = 2;
+    const limit = Math.sqrt(num);
 
-  for (let edge of edges) {
-    let a = +(edge.split(' ')[0]);
-    let b = +(edge.split(' ')[1]);
+    while (divider <= limit) {
+      if (num % divider === 0) {
+        return 0;
+      }
 
-    adjeacencyList[a]++;
-    adjeacencyList[b]++;
-  }
-
-  for (let query of queries) {
-    let t = +(query.split(' ')[0]);
-    let k = +(query.split(' ')[1]);
-
-    if (t === 1) {
-      answer.push(adjeacencyList[k] !== 1 ? yes : no);
-    } else if (t === 2) {
-      answer.push(yes);
-    } else {
-      console.log("질의 오류 t가 1이나 2가 아닙니다.");
+      divider++;
     }
+
+    return 1;
   }
 
+  for (let num of numbers) {
+    answer += isPrime(num);
+  }
 
-  return answer.join("\n");
+  return answer;
 }
 
 console.log(solution(input));
