@@ -30,60 +30,29 @@ const input = fs
 // });
 
 function solution(input) {
-  let answer = new Set([1]);
+  let answer = [];
 
+  const GCD = (a, b) => {
+    let [min, max] = a < b ? [a, b] : [b, a];
+
+    if (min === 0) return max;
+
+    return GCD(min, max % min);
+  };
+
+  const n = +(input[0]);
   const numbers = input[1].split(' ').map((v) => +v);
 
-  const min = Math.min(...numbers);
+  let gcd = 1;
 
-  let divisorList = [1];
-  let commonDivisorList = [];
+  if (n === 2) gcd = GCD(numbers[0], numbers[1]);
+  else if (n === 3) gcd = GCD(numbers[0], GCD(numbers[1], numbers[2]));
 
-  let divider = 2;
-  const limit = min / 2;
-
-  while (divider <= limit) {
-    if (min % divider === 0) divisorList.push(divider);
-    divider++;
+  for (let i = 1; i <= gcd; i++) {
+    if (gcd % i === 0) answer.push(i);
   }
 
-  for (let divisor of divisorList) {
-    let dividable = true;
-
-    for (let denominator of numbers.slice(1)) {
-      if (denominator % divisor !== 0) {
-        dividable = false;
-        break;
-      }
-    }
-
-    if (dividable) commonDivisorList.push(divisor);
-  }
-
-  for (let commonDivisor of commonDivisorList) {
-    if (commonDivisor === 1) continue;
-
-    answer.add(commonDivisor);
-
-    let multi = 2;
-
-    while (commonDivisor * multi <= min) {
-      let isCommonDivisor = true;
-
-      for (let denominator of numbers) {
-        if (denominator % (commonDivisor * multi) !== 0) {
-          isCommonDivisor = false;
-          break;
-        }
-      }
-
-      if (isCommonDivisor) answer.add(commonDivisor * multi);
-      multi++;
-    }
-  }
-
-
-  return [...answer.values()].sort((a, b) => (+a) - (+b)).join('\n');
+  return answer.join('\n');
 }
 
 console.log(solution(input));
