@@ -32,19 +32,20 @@ const input = fs
 function solution(input) {
   let answer = 0;
 
-  const [N, B] = [input[0].split(' ')[0], +(input[0].split(' ')[1])];
+  const [A, B, C, M] = input[0].split(' ').map((v) => +v);
 
-  const alphabetLength = 'Z'.charCodeAt() - 'A'.charCodeAt();
-  let nDecimal = {};
+  let curExhuation = 0;
 
-  // 1 ~ 9
-  for (let i = 0; i < 10; i++) nDecimal[i + ''] = i;
-  // A ~ Z (10 ~ 36)
-  for (let i = 0; i <= alphabetLength; i++) nDecimal[String.fromCharCode('A'.charCodeAt() + i)] = 10 + i;
+  for (let h = 0; h < 24; h++) {
 
-  N.split('').map((v, i) => {
-    answer += nDecimal[v] * Math.pow(B, N.length - (i + 1));
-  });
+    if (curExhuation + A > M) {
+      curExhuation -= C;
+      if (curExhuation < 0) curExhuation = 0;
+    } else {
+      answer += B;
+      curExhuation += A;
+    }
+  }
 
   return answer;
 }
