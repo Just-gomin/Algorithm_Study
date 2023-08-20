@@ -30,21 +30,21 @@ const input = fs
 // });
 
 function solution(input) {
-  let answer = 0;
+  let answer = -1;
+  let exchange = +input[0];
 
-  const [A, B, C, M] = input[0].split(' ').map((v) => +v);
+  let n5 = Math.floor(exchange / 5);
+  let n2 = 0;
 
-  let curExhuation = 0;
+  while (n5 > -1) {
+    if ((exchange - 5 * n5) % 2 === 0) {
+      n2 = (exchange - 5 * n5) / 2;
 
-  for (let h = 0; h < 24; h++) {
-
-    if (curExhuation + A > M) {
-      curExhuation -= C;
-      if (curExhuation < 0) curExhuation = 0;
-    } else {
-      answer += B;
-      curExhuation += A;
+      answer = n5 + n2;
+      break;
     }
+
+    n5 -= 1;
   }
 
   return answer;
