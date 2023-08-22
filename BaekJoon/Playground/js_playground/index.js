@@ -30,27 +30,13 @@ const input = fs
 // });
 
 function solution(input) {
-  let answer = "";
+  let answer = 0;
 
-  const board = input[0].split(".");
-  const aaaa = "AAAA";
-  const bb = "BB";
+  const [n, ropes] = [+input[0], input.splice(1).map((i) => +i).sort((a, b) => a - b)];
 
-  for (let i = 0; i < board.length; i++) {
-    const part = board[i];
-
-    if (i != 0) {
-      answer += ".";
-    }
-
-    if (part.length % 2 === 0) {
-      let countAAAA = Math.floor(part.length / aaaa.length);
-      let countBB = Math.floor((part.length % aaaa.length) / bb.length);
-      answer += aaaa.repeat(countAAAA);
-      answer += bb.repeat(countBB);
-    } else {
-      return -1;
-    }
+  for (let i = 0; i < n; i++) {
+    let maxWeight = ropes[i] * (n - i);
+    if (answer < maxWeight) answer = maxWeight;
   }
 
   return answer;
