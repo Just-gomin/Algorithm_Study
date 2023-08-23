@@ -31,13 +31,9 @@ const input = fs
 
 function solution(input) {
   let answer = 0;
+  const [n, tips] = [+input[0], input.splice(1).map((i) => +i).sort((a, b) => b - a)];
 
-  const [n, ropes] = [+input[0], input.splice(1).map((i) => +i).sort((a, b) => a - b)];
-
-  for (let i = 0; i < n; i++) {
-    let maxWeight = ropes[i] * (n - i);
-    if (answer < maxWeight) answer = maxWeight;
-  }
+  answer = tips.reduce((preval, curval, i, _) => preval += curval - i < 0 ? 0 : curval - i, answer);
 
   return answer;
 }
