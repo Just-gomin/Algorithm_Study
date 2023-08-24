@@ -31,9 +31,20 @@ const input = fs
 
 function solution(input) {
   let answer = 0;
-  const [n, tips] = [+input[0], input.splice(1).map((i) => +i).sort((a, b) => b - a)];
 
-  answer = tips.reduce((preval, curval, i, _) => preval += curval - i < 0 ? 0 : curval - i, answer);
+  const [n, times] = [
+    Number(input[0]),
+    input[1]
+      .split(' ')
+      .map((v) => Number(v))
+      .sort((a, b) => a - b)
+  ];
+
+  let acc = 0;
+  for (let i = 0; i < n; i++) {
+    answer += acc + times[i];
+    acc += times[i];
+  }
 
   return answer;
 }
