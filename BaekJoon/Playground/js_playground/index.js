@@ -32,19 +32,17 @@ const input = fs
 function solution(input) {
   let answer = 0;
 
-  const [n, times] = [
-    Number(input[0]),
-    input[1]
-      .split(' ')
-      .map((v) => Number(v))
-      .sort((a, b) => a - b)
-  ];
+  const n = Number(input[0]);
 
-  let acc = 0;
-  for (let i = 0; i < n; i++) {
-    answer += acc + times[i];
-    acc += times[i];
+  let fiboBasket = [0, 1];
+
+  const fiboNum = (n) => fiboBasket[n - 1] + fiboBasket[n - 2];
+
+  while (fiboBasket.length < n + 1) {
+    fiboBasket.push(fiboNum(fiboBasket.length));
   }
+
+  answer = fiboBasket[n];
 
   return answer;
 }
