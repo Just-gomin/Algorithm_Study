@@ -34,17 +34,21 @@ function solution(input) {
 
   const n = Number(input[0]);
 
-  let fiboBasket = [0, 1];
+  let fn0 = 0;
+  let fn1 = 1;
 
-  const fiboNum = (n) => fiboBasket[n - 1] + fiboBasket[n - 2];
-
-  while (fiboBasket.length < n + 1) {
-    fiboBasket.push(fiboNum(fiboBasket.length));
+  if (n === 0) return fn0;
+  else if (n === 1) return fn1;
+  else {
+    let i = 1;
+    while (i++ < n) {
+      answer = fn1 + fn0;
+      fn0 = BigInt(fn1);
+      fn1 = BigInt(answer);
+    }
   }
 
-  answer = fiboBasket[n];
-
-  return answer;
+  return answer.toString();
 }
 
 console.log(solution(input));
