@@ -1,16 +1,18 @@
-// ------------------------------
-// Input with File System
-// ------------------------------
+/*
+  - 문제 Link : https://www.acmicpc.net/problem/1010
 
-// Read Inputs (from. https://help.acmicpc.net/language/info [node.js & TypeScript])
+  # Solution
+  1. 0 < n <= m < 30
+  2. if(n < 1) return 0;
+  3. if(n === 1) return m;
+  4. if(n === m) return 1;
+  5. f(n, m) => return numOfMethods;
+  6. f: for(i: 0 ~ (m-n)) 진행하며 f(n-1, m - 1 - i) 누계
+*/
+
 const fs = require("fs");
 const { exit } = require("process");
-
-// 입력값 파일 경로 결정
-// node 실행 시 환경변수 [RUNNING_ON]을 "local"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
 const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
-
-// 입력 값
 const input = fs
   .readFileSync(filePath)
   .toString()
@@ -18,21 +20,13 @@ const input = fs
   .split("\n")
   .map((v) => v.trim());
 
-// ------------------------------
-// Input with Read Line
-// ------------------------------
-
-// // Read Inputs (from. https://velog.io/@leenzy/readline-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
-// const readline = require("readline");
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
-
+// 재귀 함수 이용 풀이 => 시간 초과
 function solution(input) {
   let answer = [];
 
   const [numOfCases, cases] = [Number(input[0]), input.splice(1)];
+
+  const methodMap = new Map();
 
   const buildBridge = (n, m) => {
     if (n < 1) return 0;
