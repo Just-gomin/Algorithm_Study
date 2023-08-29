@@ -30,7 +30,17 @@ const input = fs
 // });
 
 function solution(input) {
-  return Number(input[0]) % 2 ? "SK" : "CY";
+  let answer = -1;
+
+  let n = Number(input[0]);
+
+  let numOf5 = Math.floor(n / 5) + 1;
+
+  while (--numOf5 > -1) {
+    if ((n - 5 * numOf5) % 3 === 0) return numOf5 + ((n - 5 * numOf5) / 3);
+  }
+
+  return answer;
 }
 
 console.log(solution(input));
