@@ -30,38 +30,7 @@ const input = fs
 // });
 
 function solution(input) {
-  let answer = [];
-
-  const [numOfCases, cases] = [Number(input[0]), input.splice(1)];
-
-  const limit = 30;
-  const archive = new Array(limit);
-  for (let i = 0; i < limit; i++) {
-    archive[i] = new Array(limit).fill(i === 0 ? 0 : -1);
-  }
-
-  const buildBridge = (n, m) => {
-    if (n < 1) return 0;
-    if (n === 1) return m;
-    if (n === m) return 1;
-    if (archive[n][m] !== -1) return archive[n][m];
-
-    let numOfMethods = 0;
-    for (let i = 0; i <= m - n; i++) {
-      numOfMethods += buildBridge(n - 1, m - 1 - i);
-    }
-
-    archive[n][m] = numOfMethods;
-
-    return numOfMethods;
-  };
-
-  for (let i = 0; i < numOfCases; i++) {
-    const [n, m] = cases[i].split(" ").map((v) => Number(v));
-    answer.push(buildBridge(n, m));
-  }
-
-  return answer.join("\n");
+  return Number(input[0]) % 2 ? "SK" : "CY";
 }
 
 console.log(solution(input));
