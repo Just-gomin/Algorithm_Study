@@ -32,30 +32,32 @@ const input = fs
 function solution(input) {
   let answer = [];
 
-  const [n, m] = input[0].split(' ').map((v) => Number(v));
+  const n = Number(input[0].split(' ')[0])
 
   const area = [];
   input
     .slice(1, n + 1)
     .forEach(element => {
-      area.push(
-        element
-          .split(' ')
-          .map((v) => Number(v))
-      );
+      let line = [0];
+      let accumulate = 0;
+
+      element
+        .split(' ')
+        .forEach((v) => {
+          line.push(accumulate += Number(v));
+        });
+
+      area.push(line);
     });
 
-  const k = Number(input[n + 1]);
-
-  input.splice(n + 2).forEach(element => {
-    const [x1, y1, x2, y2] = element.split(' ').map((v) => Number(v));
-
+  input.slice(n + 2).forEach(test => {
+    const [x1, y1, x2, y2] = test.split(' ').map((v) => Number(v));
     answer.push(
       area
         .slice(x1 - 1, x2)
-        .reduce((prev, cur) => {
-          return prev + cur.slice(y1 - 1, y2).reduce((prev, cur) => prev + cur, 0);
-        }, 0)
+        .reduce(
+          (prev, line) => prev + (line[y2] - line[y1 - 1])
+          , 0)
     );
   });
 
