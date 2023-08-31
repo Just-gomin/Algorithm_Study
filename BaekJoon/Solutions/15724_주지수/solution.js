@@ -1,33 +1,30 @@
-// ------------------------------
-// Input with File System
-// ------------------------------
+/*
+  - 문제 Link : https://www.acmicpc.net/problem/15724
 
-// Read Inputs (from. https://help.acmicpc.net/language/info [node.js & TypeScript])
+  # Solutions
+  - 영토의 크기 N, M(1 ≤ N, M ≤ 1,024)
+  - 1 <= 각 단위 구역 내에 살고 있는 사람 수 <= 100
+  - 직사각형 범위의 개수 K(1 ≤ K ≤ 100,000)
+  - 직사각형 범위 x1, y1, x2, y2 (x1 ≤ x2, y1 ≤ y2)
+
+  1. 영토 및 거주자 수 정보 저장하는 이차원 배열
+  2. 테스트 케이스의 개수가 10만개까지 가능하고 시간제한이 2초기 때문에, 
+  동적 기획법으로 해결할 필요가 있다. => 시작점이 항상 달라지는데... 흠...
+  3. 테스트 케이스 별로 x1 ~ x2까지 splice 하고
+  4. reduce를 수행하는데
+  5. 각 행마다 y1 ~ y2까지 splice 한 배열의
+  6. reduce를 더한다.
+*/
+
 const fs = require("fs");
 const { exit } = require("process");
-
-// 입력값 파일 경로 결정
-// node 실행 시 환경변수 [RUNNING_ON]을 "local"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
 const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
-
-// 입력 값
 const input = fs
   .readFileSync(filePath)
   .toString()
   .trim()
   .split("\n")
   .map((v) => v.trim());
-
-// ------------------------------
-// Input with Read Line
-// ------------------------------
-
-// // Read Inputs (from. https://velog.io/@leenzy/readline-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
-// const readline = require("readline");
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
 
 function solution(input) {
   let answer = [];
@@ -47,7 +44,7 @@ function solution(input) {
 
   const k = Number(input[n + 1]);
 
-  input.splice(n + 2).forEach(element => {
+  input.slice(n + 2).forEach(element => {
     const [x1, y1, x2, y2] = element.split(' ').map((v) => Number(v));
 
     answer.push(
@@ -59,7 +56,7 @@ function solution(input) {
     );
   });
 
-  return answer.join('\n');
+  return answer;
 }
 
 console.log(solution(input));
