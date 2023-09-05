@@ -35,21 +35,17 @@ function solution(input) {
   const t = Number(input[0]);
   const testCases = input.slice(1);
 
-  const getNumOfWays = (amount, coins = []) => {
-    if (amount === 0 || coins.length === 0) return 0;
-    if (coins.length === 1) {
-      return amount % coins[0] !== 0 ? 0 : 1;
+  const getNumOfWays = (amount, coins) => {
+    let basket = Array(amount + 1).fill(0);
+    basket[0] = 1;
+
+    for (const coin of coins) {
+      for (let k = coin; k <= amount; k++) {
+        basket[k] += basket[k - coin];
+      }
     }
 
-    const maxCoin = coins.at(-1);
-    let maxCoinN = Math.floor(amount / maxCoin);
-    let result = amount % maxCoin === 0 ? 1 : 0;
-
-    while (--maxCoinN >= 0) {
-      result += getNumOfWays(amount - maxCoin * maxCoinN, coins.slice(0, -1));
-    }
-
-    return result;
+    return basket[amount];
   }
 
   for (let i = 0; i < t; i++) {
