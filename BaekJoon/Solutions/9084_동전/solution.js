@@ -1,33 +1,28 @@
-// ------------------------------
-// Input with File System
-// ------------------------------
+/*
+  - 문제 Link : https://www.acmicpc.net/problem/9084
 
-// Read Inputs (from. https://help.acmicpc.net/language/info [node.js & TypeScript])
+  # Solutions
+  - 테스트 케이스의 개수 T(1 ≤ T ≤ 10)
+  - 첫 번째 줄에는 동전의 가지 수 N(1 ≤ N ≤ 20)
+  - 두 번째 줄에는 N가지 동전의 각 금액이 오름차순으로 정렬
+  - 세 번째 줄에는 주어진 N가지 동전으로 만들어야 할 금액 M(1 ≤ M ≤ 10000)
+  - 편의를 위해 방법의 수는 2^31 - 1 보다 작고, 같은 동전이 여러 번 주어지는 경우는 없다.
+  
+  - 값을 저장하는 문제가 아닌 점화식을 이용한 문제로 판단
+  - 금액과 동전 목록을 입력 받아 재귀 호출되는 함수 작성
+  - 가장 금액이 큰 동전으로 남은 금액을 나누었을 때 몫을 구하여, 그걸 하나씩 줄여가며 경우의 수를 찾는다.
+  - 입력 받은 동전 목록의 길이가 1이고, 해당 동전으로 남은 금액이 나누어 떨어진다면 1반환
+*/
+
 const fs = require("fs");
 const { exit } = require("process");
-
-// 입력값 파일 경로 결정
-// node 실행 시 환경변수 [RUNNING_ON]을 "local"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
 const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
-
-// 입력 값
 const input = fs
   .readFileSync(filePath)
   .toString()
   .trim()
   .split("\n")
   .map((v) => v.trim());
-
-// ------------------------------
-// Input with Read Line
-// ------------------------------
-
-// // Read Inputs (from. https://velog.io/@leenzy/readline-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
-// const readline = require("readline");
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
 
 function solution(input) {
   let answer = [];
