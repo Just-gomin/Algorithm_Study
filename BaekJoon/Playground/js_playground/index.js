@@ -30,32 +30,25 @@ const input = fs
 // });
 
 function solution(input) {
-  let answer = [];
+  const [n, k] = input[0].split(' ').map((v) => Number(v));
+  const pairs = input.slice(1).map((v) => v.split(' ').map((v2) => Number(v2))); // [weight, value] pairs
 
-  const t = Number(input[0]);
-  const testCases = input.slice(1);
+  const basket = Array(k + 1).fill(0);
 
-  const getNumOfWays = (amount, coins) => {
-    let basket = Array(amount + 1).fill(0);
-    basket[0] = 1;
+  for (let w = 1; w <= k; w++) {
+    let maxValue = basket[w - 1];
 
-    for (const coin of coins) {
-      for (let k = coin; k <= amount; k++) {
-        basket[k] += basket[k - coin];
+    for (let i = 0; i < n; i++) {
+      const [iw, iv] = pairs[i];
+      if (w - iw >= 0) {
+        maxValue = Math.max(maxValue, basket[w - iw] + iv);
       }
     }
 
-    return basket[amount];
+    basket[w] = maxValue;
   }
 
-  for (let i = 0; i < t; i++) {
-    const startIndex = 3 * i;
-    const coins = testCases[startIndex + 1].split(' ').map((v) => Number(v));
-    const m = Number(testCases[startIndex + 2]);
-    answer.push(getNumOfWays(m, coins));
-  }
-
-  return answer.join('\n');
+  return basket[k];
 }
 
 console.log(solution(input));
