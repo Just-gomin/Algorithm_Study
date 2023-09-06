@@ -30,25 +30,23 @@ const input = fs
 // });
 
 function solution(input) {
-  const [n, k] = input[0].split(' ').map((v) => Number(v));
-  const pairs = input.slice(1).map((v) => v.split(' ').map((v2) => Number(v2))); // [weight, value] pairs
+  const [n, k] = input[0].split(' ').map(Number);
+  const items = input.slice(1).map((v) => v.split(' ').map(Number)); // [weight, value] pairs
 
-  const basket = Array(k + 1).fill(0);
-
-  for (let w = 1; w <= k; w++) {
-    let maxValue = basket[w - 1];
-
-    for (let i = 0; i < n; i++) {
-      const [iw, iv] = pairs[i];
-      if (w - iw >= 0) {
-        maxValue = Math.max(maxValue, basket[w - iw] + iv);
-      }
-    }
-
-    basket[w] = maxValue;
+  const basket = Array(n + 1);
+  for (let i = 0; i <= n; i++) {
+    basket[i] = Array(k + 1).fill(0);
   }
 
-  return basket[k];
+  for (let i = 1; i <= n; i++) {
+    const [iw, iv] = items[i - 1];
+
+    for (let w = 1; w <= k; w++) {
+      basket[i][w] = w < iw ? basket[i - 1][w] : Math.max(basket[i - 1][w], basket[i - 1][w - iw] + iv);
+    }
+  }
+
+  return basket[n][k];
 }
 
 console.log(solution(input));
