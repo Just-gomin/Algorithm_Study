@@ -40,7 +40,7 @@ function solution(input) {
 
   for (let i = 1; i < str1.length; i++) {
     for (let j = 1; j < str2.length; j++) {
-      dp[i][j] = Math.max(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]) + (str1[i] === str2[j] ? 1 : 0);
+      dp[i][j] = str1[i] === str2[j] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
     }
   }
 
