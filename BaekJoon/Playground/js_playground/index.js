@@ -30,21 +30,25 @@ const input = fs
 // });
 
 function solution(input) {
-  const str1 = ' ' + input[0];
-  const str2 = ' ' + input[1];
+  const numerator = Math.pow(10, 9);
+  const [N, K] = input[0].split(' ').map(Number);
 
-  const dp = Array(str1.length);
-  for (let i = 0; i < str1.length; i++) {
-    dp[i] = Array(str2.length).fill(0);
+  const dp = Array(N + 1);
+  for (let i = 0; i <= N; i++) {
+    dp[i] = Array(K + 1).fill(0);
   }
 
-  for (let i = 1; i < str1.length; i++) {
-    for (let j = 1; j < str2.length; j++) {
-      dp[i][j] = str1[i] === str2[j] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
+  for (let n = 1; n <= N; n++) {
+    for (let k = 1; k <= K; k++) {
+      let accumulate = 0;
+      for (let i = 1; i <= n; i++) {
+        accumulate += dp[i][k - 1];
+      }
+      dp[n][k] = (1 + accumulate) % numerator;
     }
   }
 
-  return dp[str1.length - 1][str2.length - 1];
+  return dp[N][K];
 }
 
 console.log(solution(input));
