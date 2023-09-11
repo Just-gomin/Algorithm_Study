@@ -29,10 +29,28 @@ const input = fs
 //   output: process.stdout,
 // });
 
-const solution = (input) => [
-  ...input[1].split(' ').map(Number),
-  ...input[2].split(' ').map(Number)
-].sort((a, b) => a - b).join(' ');
+function solution(input) {
+  let max = 0;
+  let history = 0;
 
+  const [N, X] = input[0].split(" ").map(Number);
+  const visitors = input[1].split(" ").map(Number);
+
+  for (let i = 0; i <= N - X; i++) {
+    let acc = 0;
+    for (let j = i; j < i + X; j++) {
+      acc += visitors[j];
+    }
+
+    if (acc > max) {
+      max = acc;
+      history = 1;
+    } else if (acc === max) {
+      history += 1;
+    }
+  }
+
+  return max === 0 ? "SAD" : `${max}\n${history}`;
+}
 
 console.log(solution(input));
