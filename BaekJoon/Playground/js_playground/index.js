@@ -30,22 +30,19 @@ const input = fs
 // });
 
 function solution(input) {
-  let max = 0;
-  let history = 0;
-
   const [N, X] = input[0].split(" ").map(Number);
   const visitors = input[1].split(" ").map(Number);
 
-  for (let i = 0; i <= N - X; i++) {
-    let acc = 0;
-    for (let j = i; j < i + X; j++) {
-      acc += visitors[j];
-    }
+  let max = visitors.slice(0, X).reduce((pre, cur, i, arr) => pre + cur, 0);
+  let curSum = max;
+  let history = 1;
 
-    if (acc > max) {
-      max = acc;
+  for (let i = 0; i < N - X; i++) {
+    curSum = curSum - visitors[i] + visitors[i + X];
+    if (curSum > max) {
+      max = curSum;
       history = 1;
-    } else if (acc === max) {
+    } else if (curSum === max) {
       history += 1;
     }
   }
