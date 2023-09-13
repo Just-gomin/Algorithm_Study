@@ -30,24 +30,27 @@ const input = fs
 // });
 
 function solution(input) {
-  const [N, X] = input[0].split(" ").map(Number);
-  const visitors = input[1].split(" ").map(Number);
+  const [N, K] = input[0].split(" ").map(Number);
+  const serial = input[1].split(" ").map(Number);
+  const cnt = Array(100001).fill(0);
 
-  let max = visitors.slice(0, X).reduce((pre, cur, i, arr) => pre + cur, 0);
-  let curSum = max;
-  let history = 1;
+  let start = 0, end = 0;
+  let answer = 0;
 
-  for (let i = 0; i < N - X; i++) {
-    curSum = curSum - visitors[i] + visitors[i + X];
-    if (curSum > max) {
-      max = curSum;
-      history = 1;
-    } else if (curSum === max) {
-      history += 1;
+  while (end < N && start <= end) {
+    cnt[serial[end]] += 1;
+
+    if (cnt[serial[end]] > K) {
+      if (answer < end - start) answer = end - start;
+
+      while (cnt[serial[end]] > K) cnt[serial[start++]] -= 1;
     }
+
+    end += 1;
   }
 
-  return max === 0 ? "SAD" : `${max}\n${history}`;
+  if (answer === 0) answer = N;
+  return answer;
 }
 
 console.log(solution(input));
