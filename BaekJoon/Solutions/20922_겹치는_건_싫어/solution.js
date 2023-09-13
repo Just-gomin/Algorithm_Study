@@ -9,12 +9,15 @@
   - 원소의 등장 횟수를 세기 위한 cnt 배열 선언
   - 부분수열의 시작점과 끝점을 나타내는 변수 start,end 선언
   - 최장 부분 수열의 길이를 저장하는 변수 answer 선언
-  - end를 1씩 증가 시키며 순회
-    - end가 가리키는 원소의 등장 횟수 1증가
-    - 해당 원소의 등장 횟수가 K를 초과하는 경우,
-      - answer과 end - start를 비교해 answer 갱신
-      - start를 1씩 증가시키며, start가 가리키는 원소들의 등장 횟수 1차감
-    
+  - 원소의 등장횟수가 K 이하가 되도록 유지하기 위해 start와 end를 이용해 순회 진행
+  - 반복문 진행
+    - cnt[serial[end]] < K
+      - cnt[serial[end]] 1 증가
+      - end 1 증가
+      - answer 와 end - start 비교하여 갱신
+    - cnt[serial[end]] === K
+      - cnt[serial[start]] 1 감소
+      - start 1 증가
 */
 
 const fs = require("fs");
@@ -36,18 +39,14 @@ function solution(input) {
   let answer = 0;
 
   while (end < N && start <= end) {
-    cnt[serial[end]] += 1;
-
-    if (cnt[serial[end]] > K) {
-      if (answer < end - start) answer = end - start;
-
-      while (cnt[serial[end]] > K) cnt[serial[start++]] -= 1;
+    if (cnt[serial[end]] < K) {
+      cnt[serial[end++]] += 1;
+      answer = Math.max(answer, end - start);
+    } else if (cnt[serial[end]] === K) {
+      cnt[serial[start++]] -= 1;
     }
-
-    end += 1;
   }
 
-  if (answer === 0) answer = N;
   return answer;
 }
 

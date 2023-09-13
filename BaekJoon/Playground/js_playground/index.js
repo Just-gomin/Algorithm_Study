@@ -38,18 +38,14 @@ function solution(input) {
   let answer = 0;
 
   while (end < N && start <= end) {
-    cnt[serial[end]] += 1;
-
-    if (cnt[serial[end]] > K) {
-      if (answer < end - start) answer = end - start;
-
-      while (cnt[serial[end]] > K) cnt[serial[start++]] -= 1;
+    if (cnt[serial[end]] < K) {
+      cnt[serial[end++]] += 1;
+      answer = Math.max(answer, end - start);
+    } else if (cnt[serial[end]] === K) {
+      cnt[serial[start++]] -= 1;
     }
-
-    end += 1;
   }
 
-  if (answer === 0) answer = N;
   return answer;
 }
 
