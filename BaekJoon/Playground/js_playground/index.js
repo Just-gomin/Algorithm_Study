@@ -33,17 +33,21 @@ function solution(input) {
   let answer = [];
 
   const N = Number(input[0]);
-  const values = input[1].split(" ").map(Number);
+  const values = input[1].split(" ").map(Number).sort((a, b) => a - b);
+
+  let start = 0, end = N - 1;
   let min = Infinity;
 
-  for (let i = 0; i < N - 1; i++) {
-    for (let j = i + 1; j < N; j++) {
-      let sum = Math.abs(values[i] + values[j]);
-      if (sum < min) {
-        min = sum;
-        answer = [values[i], values[j]];
-      }
+  while (start < end) {
+    const sum = values[start] + values[end];
+    if (Math.abs(sum) < min) {
+      min = Math.abs(sum);
+      answer = [values[start], values[end]];
     }
+
+    if (sum < 0) start += 1;
+    if (sum === 0) break;
+    if (sum > 0) end -= 1;
   }
 
   return answer.join(" ");
