@@ -30,23 +30,23 @@ const input = fs
 // });
 
 function solution(input) {
-  const [N, K] = input[0].split(" ").map(Number);
-  const serial = input[1].split(" ").map(Number);
-  const cnt = Array(100001).fill(0);
+  let answer = [];
 
-  let start = 0, end = 0;
-  let answer = 0;
+  const N = Number(input[0]);
+  const values = input[1].split(" ").map(Number);
+  let min = Infinity;
 
-  while (end < N && start <= end) {
-    if (cnt[serial[end]] < K) {
-      cnt[serial[end++]] += 1;
-      answer = Math.max(answer, end - start);
-    } else if (cnt[serial[end]] === K) {
-      cnt[serial[start++]] -= 1;
+  for (let i = 0; i < N - 1; i++) {
+    for (let j = i + 1; j < N; j++) {
+      let sum = Math.abs(values[i] + values[j]);
+      if (sum < min) {
+        min = sum;
+        answer = [values[i], values[j]];
+      }
     }
   }
 
-  return answer;
+  return answer.join(" ");
 }
 
 console.log(solution(input));
