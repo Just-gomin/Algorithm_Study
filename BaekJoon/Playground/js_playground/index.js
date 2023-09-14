@@ -30,27 +30,27 @@ const input = fs
 // });
 
 function solution(input) {
-  let answer = [];
+  let answer = 0;
+  let cnt = 0;
 
-  const N = Number(input[0]);
-  const values = input[1].split(" ").map(Number).sort((a, b) => a - b);
+  const [N, K] = input[0].split(" ").map(Number);
+  const serial = input[1].split(" ").map(Number);
 
-  let start = 0, end = N - 1;
-  let min = Infinity;
+  let start = 0, end = 0;
 
-  while (start < end) {
-    const sum = values[start] + values[end];
-    if (Math.abs(sum) < min) {
-      min = Math.abs(sum);
-      answer = [values[start], values[end]];
+  while (end < N && start <= end) {
+    if (cnt <= K) {
+      if (serial[end] % 2 === 1) cnt += 1;
+
+      answer = Math.max(answer, end - start + 1 - cnt);
+      end += 1;
+    } else if (cnt > K) {
+      if (serial[start] % 2 === 1) cnt -= 1;
+      start += 1;
     }
-
-    if (sum < 0) start += 1;
-    if (sum === 0) break;
-    if (sum > 0) end -= 1;
   }
 
-  return answer.join(" ");
+  return answer;
 }
 
 console.log(solution(input));
