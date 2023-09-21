@@ -31,18 +31,11 @@ const input = fs
 
 function solution(input) {
   let answer = [];
-  const check = new Array(31).fill(false);
-  const studentArr = input.map(v => Number(v.trim()));
-
-  studentArr.map((v) => {
-    check[v] = true;
-  });
-
-  for (let i = 1; i <= 30; i++) {
-    if (!check[i]) answer.push(i);
-    if (answer.length === 2) break;
+  const T = Number(input[0]);
+  for (let i = 1; i <= T; i++) {
+    const nums = input[2 * i].split(' ').map(Number);
+    answer.push(`${Math.min(...nums)} ${Math.max(...nums)}`);
   }
-
   return answer.join('\n');
 }
 
