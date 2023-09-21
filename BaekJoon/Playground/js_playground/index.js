@@ -30,9 +30,20 @@ const input = fs
 // });
 
 function solution(input) {
-  const year = Number(input[0]);
+  let answer = [];
+  const check = new Array(31).fill(false);
+  const studentArr = input.map(v => Number(v.trim()));
 
-  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0) ? 1 : 0;
+  studentArr.map((v) => {
+    check[v] = true;
+  });
+
+  for (let i = 1; i <= 30; i++) {
+    if (!check[i]) answer.push(i);
+    if (answer.length === 2) break;
+  }
+
+  return answer.join('\n');
 }
 
 console.log(solution(input));
