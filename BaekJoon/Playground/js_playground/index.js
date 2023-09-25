@@ -29,64 +29,38 @@ const input = fs
 //   output: process.stdout,
 // });
 
-const dfs = (N, V, graph) => {
-  const answer = [];
-  const visited = new Array(N + 1).fill(false);
-  const stack = [V];
+function solution(input = []) {
 
-  while (stack.length !== 0) {
-    const node = stack.pop();
+  const [n, pairs] = [parseInt(input[0]), input.slice(1)];
 
-    if (!visited[node]) {
-      answer.push(node);
-      visited[node] = true;
-      const children = [...graph[node]].sort((a, b) => b - a);
-      for (const child of children) stack.push(child);
+  let tree = [...new Array(n + 1)].map(() => []); // 인접 리스트 트리
+  let visited = new Array(n + 1).fill(false); // BFS를 위한 탐색 여부 확인 배열
+  let queue = [1]; // BFS를 수행하는 Queue
+
+  let answer = new Array(n + 1).fill(NaN); // 노드의 부모를 기록하기 위한 배열
+
+  // 인접 리스트 트리 기록
+  for (const pair of pairs) {
+    const [from, to] = pair.split(' ').map(Number);
+
+    tree[from].push(to);
+    tree[to].push(from);
+  }
+
+  // BFS 진행 및 부모노드 기록
+  while (queue.length > 0) {
+    let curNode = queue.shift();
+
+    for (const child of tree[curNode]) {
+      if (!visited[child]) {
+        visited[child] = true;
+        answer[child] = curNode;
+        queue.push(child);
+      }
     }
   }
 
-  return answer.join(' ');
-}
-
-const bfs = (N, V, graph) => {
-  const answer = [];
-  const visited = new Array(N + 1).fill(false);
-  const queue = [V];
-
-  while (queue.length !== 0) {
-    const node = queue.shift();
-
-    if (!visited[node]) {
-      answer.push(node);
-      visited[node] = true;
-      const children = [...graph[node]].sort((a, b) => a - b);
-      for (const child of children) queue.push(child);
-    }
-  }
-
-  return answer.join(' ');
-}
-
-function solution(input) {
-  let answer = [];
-
-  const [N, M, V] = input[0].split(' ').map(Number);
-  const graph = new Array(N + 1);
-
-  for (let i = 0; i <= N; i++) {
-    graph[i] = new Set();
-  }
-
-  // 양방향 그래프
-  for (let i = 1; i <= M; i++) {
-    const [from, to] = input[i].split(' ').map(Number);
-    graph[from].add(to), graph[to].add(from);
-  }
-
-  answer.push(dfs(N, V, graph));
-  answer.push(bfs(N, V, graph));
-
-  return answer.join('\n');
+  return answer.slice(2).join('\n');
 }
 
 console.log(solution(input));
