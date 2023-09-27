@@ -1,6 +1,9 @@
 /*
   - 문제 Link : https://www.acmicpc.net/problem/1325
 
+  - 참고: https://velog.io/@jooyong-boo/javascript-%EB%B0%B1%EC%A4%80-1325%EB%B2%88-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%ED%95%B4%ED%82%B9-qux42o4r
+  - 내가 푼것과 다르지 않은데, 왜 이분 코드는 통과했을까...?
+
   # Solution
   - 이 회사는 N개의 컴퓨터로 이루어져 있다
   - 이 회사의 컴퓨터는 신뢰하는 관계와, 신뢰하지 않는 관계로 이루어져 있는데, A가 B를 신뢰하는 경우에는 B를 해킹하면, A도 해킹할 수 있다
@@ -13,8 +16,7 @@
   - 인접 리스트 그래프로 주어진 신뢰 관계를 저장한다.
     - 양방향이 아니기 때문에 단방향으로의 관계만 저장한다.
   - 1번부터 N번까지 순회하며, DFS를 진행한다.
-  - DFS를 진행하며, 각 노드의 최대 탐색 횟수를 저장한다. 
-    다음 탐색 진행시 해당 노드가 나오면 바로 탐색 가능한 노드 수를 반환한다.
+  - DFS를 진행하며, 각 노드의 최대 탐색 횟수를 저장한다.
 */
 
 const fs = require("fs");
@@ -32,30 +34,32 @@ function solution(input) {
 
   const [N, M] = input[0].split(' ').map(Number);
 
-  const dfs = (start, graph) => {
-    const visited = new Array(N + 1).fill(false);
-    const stack = [start];
-
-    while (stack.length !== 0) {
-      const node = stack.pop();
-      visited[node] = true;
-      for (const child of graph[node]) {
-        if (!visited[child]) stack.push(child);
-      }
-    }
-
-    return visited.filter((value) => value).length;
-  }
-
   const graph = new Array(N + 1).fill(0).map(() => new Array());
   for (let i = 1; i <= M; i++) {
     const [A, B] = input[i].split(' ').map(Number);
     graph[B].push(A);
   }
 
+  const dfs = (start) => {
+    const visited = new Array(N + 1).fill(false);
+    const stack = [start];
+    let cnt = 0;
+
+    while (stack.length !== 0) {
+      const node = stack.pop();
+      visited[node] = true;
+      cnt++;
+      for (const child of graph[node]) {
+        if (!visited[child]) stack.push(child);
+      }
+    }
+
+    return cnt;
+  }
+
   let maxHacked = 0;
   for (let i = 1; i <= N; i++) {
-    let hacked = dfs(i, graph);
+    let hacked = dfs(i);
     if (maxHacked < hacked) {
       maxHacked = hacked;
       answer = [i];

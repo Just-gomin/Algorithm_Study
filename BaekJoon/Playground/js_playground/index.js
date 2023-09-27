@@ -16,7 +16,7 @@ const input = fs
   .toString()
   .trim()
   .split("\n")
-  .map((v) => v.trim());
+  .map((v) => v.trim().split(' ').map(Number));
 
 // ------------------------------
 // Input with Read Line
@@ -32,32 +32,34 @@ const input = fs
 function solution(input) {
   let answer = [];
 
-  const [N, M] = input[0].split(' ').map(Number);
+  const [N, M] = input[0];
 
-  const dfs = (start, graph) => {
-    const visited = new Array(N + 1).fill(false);
+  const graph = Array.from({ length: N + 1 }, () => []);
+  for (let i = 1; i <= M; i++) {
+    const [A, B] = input[i];
+    graph[B].push(A);
+  }
+
+  const dfs = (start) => {
+    const visited = Array.from({ length: N + 1 }, () => false);
     const stack = [start];
+    let cnt = 0;
 
     while (stack.length !== 0) {
       const node = stack.pop();
       visited[node] = true;
+      cnt++;
       for (const child of graph[node]) {
         if (!visited[child]) stack.push(child);
       }
     }
 
-    return visited.filter((value) => value).length;
-  }
-
-  const graph = new Array(N + 1).fill(0).map(() => new Array());
-  for (let i = 1; i <= M; i++) {
-    const [A, B] = input[i].split(' ').map(Number);
-    graph[B].push(A);
+    return cnt;
   }
 
   let maxHacked = 0;
   for (let i = 1; i <= N; i++) {
-    let hacked = dfs(i, graph);
+    let hacked = dfs(i);
     if (maxHacked < hacked) {
       maxHacked = hacked;
       answer = [i];
