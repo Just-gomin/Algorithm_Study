@@ -15,8 +15,7 @@ const input = fs
   .readFileSync(filePath)
   .toString()
   .trim()
-  .split("\n")
-  .map((v) => v.trim().split(' ').map(Number));
+  .split("\n");
 
 // ------------------------------
 // Input with Read Line
@@ -32,25 +31,27 @@ const input = fs
 function solution(input) {
   let answer = [];
 
-  const [N, M] = input[0];
+  const [N, M] = input[0].split(' ').map(Number);
 
   const graph = Array.from({ length: N + 1 }, () => []);
   for (let i = 1; i <= M; i++) {
-    const [A, B] = input[i];
+    const [A, B] = input[i].split(' ').map(Number);
     graph[B].push(A);
   }
 
   const dfs = (start) => {
-    const visited = Array.from({ length: N + 1 }, () => false);
+    const visited = new Array(N + 1).fill(false);
     const stack = [start];
     let cnt = 0;
 
     while (stack.length !== 0) {
       const node = stack.pop();
-      visited[node] = true;
-      cnt++;
       for (const child of graph[node]) {
-        if (!visited[child]) stack.push(child);
+        if (visited[child]) continue;
+
+        stack.push(child);
+        visited[node] = true;
+        cnt++;
       }
     }
 
@@ -60,10 +61,13 @@ function solution(input) {
   let maxHacked = 0;
   for (let i = 1; i <= N; i++) {
     let hacked = dfs(i);
+
     if (maxHacked < hacked) {
       maxHacked = hacked;
-      answer = [i];
-    } else if (maxHacked === hacked) answer.push(i);
+      answer = [];
+    }
+
+    if (maxHacked === hacked) answer.push(i);
   }
 
   return answer.join(' ');
