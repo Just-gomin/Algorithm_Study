@@ -1,32 +1,25 @@
-// ------------------------------
-// Input with File System
-// ------------------------------
+/*
+  - 문제 Link : https://www.acmicpc.net/problem/2178
 
-// Read Inputs (from. https://help.acmicpc.net/language/info [node.js & TypeScript])
+  # Solution
+  - 미로에서 1은 이동할 수 있는 칸을 나타내고, 0은 이동할 수 없는 칸
+  - 미로가 주어졌을 때, (1, 1)에서 출발하여 (N, M)의 위치로 이동할 때 지나야 하는 최소의 칸 수를 구하는 프로그램을 작성
+  - N, M(2 ≤ N, M ≤ 100)
+
+  - 주어진 미로의 정보를 이차원 배열로 저장
+  - 해당 좌표의 블록까지 도달한 블록수 저장을 위한 이차원 배열 생성
+  - 시작점인 (1, 1)부터 bfs를 진행
+    - 상하좌우 좌표들에 대해 유효한 인덱스를 가졌는지, 방문하지 않았으며 벽이 아닌지 확인
+    - 이전 블록에 도달하기 까지 거친 블록수에 1을 더해 현재의 블록까지 걸린 거리를 계산
+*/
+
 const fs = require("fs");
-const { exit } = require("process");
-
-// 입력값 파일 경로 결정
-// node 실행 시 환경변수 [RUNNING_ON]을 "local"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
 const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
-
-// 입력 값
 const input = fs
   .readFileSync(filePath)
   .toString()
   .trim()
   .split("\n");
-
-// ------------------------------
-// Input with Read Line
-// ------------------------------
-
-// // Read Inputs (from. https://velog.io/@leenzy/readline-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
-// const readline = require("readline");
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
 
 function solution(input) {
   let answer = [];
