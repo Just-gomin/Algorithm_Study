@@ -1,0 +1,32 @@
+{
+  "files.associations": {
+    "iostream": "cpp",
+    "utility": "cpp",
+    "algorithm": "cpp",
+    "memory_resource": "cpp",
+    "functional": "cpp",
+    "iterator": "cpp",
+    "locale": "cpp",
+    "ostream": "cpp",
+    "__bit_reference": "cpp",
+    "__hash_table": "cpp",
+    "array": "cpp",
+    "istream": "cpp",
+    "memory": "cpp",
+    "string": "cpp",
+    "string_view": "cpp",
+    "unordered_map": "cpp",
+    "vector": "cpp"
+  },
+  "editor.fontSize": 14,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+  },
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": [
+    "--max-line-length=90"
+  ],
+  "python.formatting.provider": "none"
+}

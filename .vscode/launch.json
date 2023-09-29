@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "[Local] Baekjoon JS",
+            "request": "launch",
+            "type": "node-terminal",
+            "command": "npm start",
+            "cwd": "${workspaceFolder}/Baekjoon/Playground/js_playground"
+        },
+        {
+            "name": "[Local] ComputerScience JS",
+            "request": "launch",
+            "type": "node-terminal",
+            "command": "npm start",
+            "cwd": "${workspaceFolder}/ConceptualStudy/ComputerScience/Playground/js_playground"
+        },
+    ]
+}

@@ -1,5 +1,7 @@
 # Setting for VScode
-.vscode
+.vscode/*
+!.vscode/launch.json
+!.vscode/settings.json
 programmers/.vscode
 
 # Mac's service file
