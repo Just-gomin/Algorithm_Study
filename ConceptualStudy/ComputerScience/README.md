@@ -2,22 +2,32 @@
 
 ## DataStructure
 
-- [ ] Array
-- [ ] List
-- [ ] Linked List
+- [ ] Array & List
+  - [ ] Array
+  - [ ] List
+    - [ ] Array Based List
+    - [ ] Linked List
 - [ ] Stack
+  - [ ] Array Based Stack
+  - [ ] Linked List Based Stack
 - [ ] Queue
-- [ ] Set
+  - [ ] Array Based Queue
+  - [ ] Linked List Based Queue
 - [ ] Tree
+- [ ] Hash
+- [ ] Heap
+- [ ] Set
 - [ ] Graph
 
 ## Algorithm
 
 - [ ] Sort
-- [ ] Dynamic Programming
 - [ ] Search
-- [ ] Backtracking
 - [ ] Divide and Conquer
+- [ ] Dynamic Programming
+- [ ] Greedy Approach
+- [ ] Backtracking
+- [ ] Branch & Bound
 
 ## 참고하기 좋은 자료들
 
