@@ -54,14 +54,20 @@ class Array2 {
 
     /**
      * 
+     * @param {number} at Index
+     * @returns Result of verifying that the given index is valid.
+     */
+    #validIndex = (at) => {
+        return 0 <= at && at < this.#capacity;
+    }
+
+    /**
+     * 
      * @param {number} at Index where you want to insert value in array.
      * @param {any} val Data which you want to insert in array.
      */
     insert(at, val) {
-        if (this.#capacity <= at) {
-            console.log("Given index is exceed array's capacity.");
-            return;
-        }
+        if (!this.#validIndex(at)) throw Error("Invalid Index.");
 
         if (this.#size === this.#capacity) {
             console.log('The Array is full. Delete Data first, and retry.');
@@ -83,10 +89,7 @@ class Array2 {
      * @param {number} at Index where you want to delete data.
      */
     delete(at) {
-        if (at >= this.#capacity) {
-            console.log("The index exceed array's capacity.");
-            return;
-        }
+        if (!this.#validIndex(at)) throw Error("Invalid Index.");
 
         if (this.#size === 0) {
             console.log('The Array is Empty. Insert Data first, and retry.');
@@ -107,6 +110,8 @@ class Array2 {
      * @param {number} at Index where you want to get data.
      */
     access(at) {
+        if (!this.#validIndex(at)) throw Error("Invalid Index.");
+
         return this.#data[at];
     }
 
@@ -116,6 +121,8 @@ class Array2 {
      * @param {any} val  Data which you want to chage.
      */
     update(at, val) {
+        if (!this.#validIndex(at)) throw Error("Invalid Index.");
+
         if (!this.#data[at]) this.#size += 1;
         this.#data[at] = val;
     }
@@ -128,7 +135,7 @@ class Array2 {
      */
     find(condition) {
         for (let i = 0; i < this.capacity; i++) {
-            const element = this.data[i];
+            const element = this.#data[i];
             if (condition(element)) return { 'index': i, 'value': element };
         }
         return -1;
@@ -139,13 +146,22 @@ const array2 = new Array2(10);
 array2.insert(0, 1);
 array2.insert(5, 2);
 array2.insert(9, 3);
-array2.insert(10, 1);
 console.log("Size ", array2.size);
 console.log("values", array2.values);
+
+try {
+    array2.insert(10, 1); // throw Error
+} catch (error) {
+    console.log(error);
+}
+
 array2.update(4, 4);
 console.log("Size ", array2.size);
 console.log("values", array2.values);
+
 array2.delete(8);
 array2.delete(5);
 console.log("Size ", array2.size);
-console.log("values", array2.values);
+console.log("values ", array2.values);
+console.log("find ", array2.find((v) => v === 5));
+console.log("find ", array2.find((v) => v === 3));
