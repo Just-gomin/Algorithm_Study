@@ -132,3 +132,7 @@ test('insert 2, index: 3', () => {
 test('update 14, index: 4', () => {
     list.update(4, 14);
 });
+
+test('find 14', () => {
+    console.log(list.find((v) => v === 14));
+});
