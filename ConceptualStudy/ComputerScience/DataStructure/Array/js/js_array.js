@@ -1,3 +1,11 @@
+// --------------------
+// JavaScript Array
+// --------------------
+
+console.log("--------------------");
+console.log("JS Array");
+console.log("--------------------");
+
 // Create Data
 let array = Array(...Array(10).keys());
 
