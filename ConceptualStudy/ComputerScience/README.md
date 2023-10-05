@@ -2,17 +2,17 @@
 
 ## DataStructure
 
-- [ ] Array & List
-  - [ ] Array
-  - [ ] List
-    - [ ] Array Based List
-    - [ ] Linked List
-- [ ] Stack
-  - [ ] Array Based Stack
-  - [ ] Linked List Based Stack
-- [ ] Queue
-  - [ ] Array Based Queue
-  - [ ] Linked List Based Queue
+- [X] Array & List
+  - [X] Array
+  - [X] List
+    - [X] Array Based List
+    - [X] Linked List
+- [X] Stack
+  - [X] Linked List Based Stack
+  - [X] JavaScript Array Based Stack
+- [X] Queue
+  - [X] Linked List Based Queue
+  - [X] JavaScript Array Based Queue
 - [ ] Tree
 - [ ] Hash
 - [ ] Heap
