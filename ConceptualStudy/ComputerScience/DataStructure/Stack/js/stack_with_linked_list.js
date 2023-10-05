@@ -64,6 +64,7 @@ const test = (testName = '', fn) => {
         console.log('\n');
     }
 }
+
 test('check size', () => { });
 
 test('push 1', () => {
