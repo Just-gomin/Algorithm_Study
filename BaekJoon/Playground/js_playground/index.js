@@ -30,23 +30,25 @@ const input = fs
 
 
 function solution(input) {
-  let answer = [];
-  const [a, b, c, d, e, f] = input[0].split(' ').map(Number);
-  answer.push((c * e - b * f) / (a * e - b * d)); // x
-  answer.push((c * d - a * f) / (b * d - a * e)); // y
-  return answer.join(' ');
+  let answer = 0;
+
+  const [N, K] = [+input[0].split(' ')[0], input[0].split(' ')[1]];
+
+  const make2DigitString = (num) => {
+    return num < 10 ? `0${num}` : `${num}`;
+  }
+
+  for (let hour = 0; hour <= N; hour++) {
+    for (let min = 0; min < 60; min++) {
+      for (let sec = 0; sec < 60; sec++) {
+        if (make2DigitString(hour).includes(K)
+          || make2DigitString(min).includes(K)
+          || make2DigitString(sec).includes(K)) answer += 1;
+      }
+    }
+  }
+
+  return answer;
 }
 
 console.log(solution(input));
-
-function bruteforceSolution(input) {
-  const [a, b, c, d, e, f] = input[0].split(' ').map(Number);
-
-  for (let x = -999; x <= 999; x++) {
-    for (let y = -999; y <= 999; y++) {
-      if ((a * x + b * y === c) && (d * x + e * y === f)) return `${x} ${y}`;
-    }
-  }
-}
-
-console.log(bruteforceSolution(input));
