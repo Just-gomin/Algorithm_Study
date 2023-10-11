@@ -1,33 +1,23 @@
-// ------------------------------
-// Input with File System
-// ------------------------------
+/*
+  - 문제 Link : https://www.acmicpc.net/problem/19532
 
-// Read Inputs (from. https://help.acmicpc.net/language/info [node.js & TypeScript])
+  - 단서
+  1. 연립 방정식 ax + by = c & dx + ey = f
+  2. 정수 a, b, c, d, e, f (-999 <= a,b,c,d,e,f <= 999)
+  3. 문제에서 언급한 방정식을 만족하는 (x,y)가 유일하게 존재하고, 이 때 x와 y가 각각 -999 이상 999 이하의 정수인 경우만 입력으로 주어짐
+
+  - 해결
+  1. 연립 방정식의 해를 구하면 x = (ce - bf)/(ae - bd), y = (cd - af)/(bd - ae) 가 된다
+  2. 입력된 a, b, c, d, e, f를 대입해 x, y를 구한다.
+*/
+
 const fs = require("fs");
-const { exit } = require("process");
-
-// 입력값 파일 경로 결정
-// node 실행 시 환경변수 [RUNNING_ON]을 "local"라는 값을 부여하여 '백준 온라인' 과 '로컬' 환경 구분
 const filePath = process.env.RUNNING_ON === "local" ? "./stdin" : "/dev/stdin";
-
-// 입력 값
 const input = fs
   .readFileSync(filePath)
   .toString()
   .trim()
   .split("\n");
-
-// ------------------------------
-// Input with Read Line
-// ------------------------------
-
-// // Read Inputs (from. https://velog.io/@leenzy/readline-%EB%AA%A8%EB%93%88-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
-// const readline = require("readline");
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
-
 
 function solution(input) {
   let answer = [];
