@@ -31,16 +31,23 @@ const input = fs
 function solution(input) {
   let answer = 0;
 
-  const [N, M] = input[0].split(' ').map(Number);
-  const cardArr = input[1].split(' ').map(Number);
+  const N = Number(input[0]);
 
-  for (let i = 0; i < N - 2; i++) {
-    for (let j = i + 1; j < N - 1; j++) {
-      for (let k = j + 1; k < N; k++) {
-        let sum = cardArr[i] + cardArr[j] + cardArr[k];
-        if (sum <= M) answer = Math.max(answer, sum);
-      }
+  const makeDigits = (num) => {
+    let result = [];
+
+    while (num > 0) {
+      result.push(num % 10);
+      num = Math.floor(num / 10);
     }
+    return result;
+  };
+
+  let provider = 0;
+  while (++provider <= N) {
+    let digits = makeDigits(provider);
+    let sum = provider + digits.reduce((pre, cur, _, __) => pre + cur, 0);
+    if (sum === N) return provider;
   }
 
   return answer;
