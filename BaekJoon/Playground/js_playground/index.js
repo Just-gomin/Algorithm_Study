@@ -32,22 +32,11 @@ function solution(input) {
   let answer = 0;
 
   const N = Number(input[0]);
-
-  const makeDigits = (num) => {
-    let result = [];
-
-    while (num > 0) {
-      result.push(num % 10);
-      num = Math.floor(num / 10);
-    }
-    return result;
-  };
-
-  let provider = 0;
-  while (++provider <= N) {
-    let digits = makeDigits(provider);
-    let sum = provider + digits.reduce((pre, cur, _, __) => pre + cur, 0);
+  let provider = N - input[0].length * 9;
+  while (provider <= N) {
+    let sum = provider + provider.toString().split('').map(Number).reduce((pre, cur) => pre + cur);
     if (sum === N) return provider;
+    provider += 1;
   }
 
   return answer;

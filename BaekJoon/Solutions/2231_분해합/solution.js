@@ -9,9 +9,10 @@
   4. 입력: 첫째 줄에 자연수 N(1 ≤ N ≤ 1,000,000)
 
   - 해결
-  1. 1부터 N-1까지 순회 진행
-  2. 해당 회차 숫자로 분해합 진행
-  3. 분해합이 N과 일치한다면 순회 중단 후 해당 회차 숫자 반환
+  1. N의 각 자리수는 최대 9이다. 따라서 탐색 범위를 N-(N의 자리수 *9) ~ N으로 지정한다.
+  2. 탐색 범위를 순회한다.
+  3. 해당 회차 숫자로 분해합 진행
+  4. 분해합이 N과 일치한다면 순회 중단 후 해당 회차 숫자 반환
 */
 
 const fs = require("fs");
@@ -26,22 +27,11 @@ function solution(input) {
     let answer = 0;
 
     const N = Number(input[0]);
-
-    const makeDigits = (num) => {
-        let result = [];
-
-        while (num > 0) {
-            result.push(num % 10);
-            num = Math.floor(num / 10);
-        }
-        return result;
-    };
-
-    let provider = 0;
-    while (++provider <= N) {
-        let digits = makeDigits(provider);
-        let sum = provider + digits.reduce((pre, cur, _, __) => pre + cur, 0);
+    let provider = N - input[0].length * 9;
+    while (provider <= N) {
+        let sum = provider + provider.toString().split('').map(Number).reduce((pre, cur) => pre + cur);
         if (sum === N) return provider;
+        provider += 1;
     }
 
     return answer;
