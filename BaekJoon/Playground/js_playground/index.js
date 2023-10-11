@@ -29,40 +29,21 @@ const input = fs
 // });
 
 function solution(input) {
-  let answer = [];
+  let answer = 0;
 
   const [N, M] = input[0].split(' ').map(Number);
+  const cardArr = input[1].split(' ').map(Number);
 
-  const maze = new Array(N + 1);
-  answer = new Array(N + 1);
-
-  maze[0] = new Array(M + 1).fill(0);
-  for (let i = 1; i <= N; i++) {
-    answer[i] = new Array(M + 1).fill(0);
-    maze[i] = [0, ...input[i].split('').map(Number)];
-  }
-
-  const isValidPosition = (r, c) => (0 < r && r <= N) && (0 < c && c <= M);
-
-  const up = [-1, 0], down = [1, 0], left = [0, -1], right = [0, 1];
-  const dirArr = [up, down, left, right];
-
-  let queue = [[1, 1]];
-  answer[1][1] = 1;
-  while (answer[N][M] === 0) {
-    let [r, c] = queue.shift();
-
-    for (const dir of dirArr) {
-      let nr = r + dir[0], nc = c + dir[1];
-      if (isValidPosition(nr, nc) && maze[nr][nc] !== 0) {
-        if (answer[nr][nc] !== 0) continue;
-        queue.push([nr, nc]);
-        answer[nr][nc] = answer[r][c] + 1;
+  for (let i = 0; i < N - 2; i++) {
+    for (let j = i + 1; j < N - 1; j++) {
+      for (let k = j + 1; k < N; k++) {
+        let sum = cardArr[i] + cardArr[j] + cardArr[k];
+        if (sum <= M) answer = Math.max(answer, sum);
       }
     }
   }
 
-  return answer[N][M];
+  return answer;
 }
 
 console.log(solution(input));
