@@ -43,6 +43,106 @@ function solution(input) {
     A[i] = input[i + 1].split(' ').map(Number);
   }
 
+  /**
+   * 
+   * @returns 인구 이동 여부. true: 인구 이동 발생 / false: 인구 이동 없음
+   */
+  const movePopulation = () => {
+    const visited = new Array(N); // 국경 공유를 확인한 나라 관리
+
+    for (let i = 0; i < N; i++) {
+      visited[i] = new Array(N).fill(false);
+    }
+
+    let totalMovementAmount = 0; // 오늘 움직인 인구의 총 합
+    let sharedCountries = []; // 국경을 공유하는 나라
+
+    /**
+     * 
+     * @param {number} r row index
+     * @param {number} c column index
+     * @returns 좌표 인덱스의 유효 여부
+     */
+    const validIndex = (r, c) => {
+      return (0 <= r && r < N) && (0 <= c && c < N);
+    }
+
+    /**
+     * 나라의 row, column이 주어지면 국경을 공유할 나라들을 너비 탐색 진행.
+     * 국경을 공유 한다면 sharedCountries에 좌표 추가.
+     * 
+     * @param {number} r row index
+     * @param {number} c column index
+     */
+    const bfs = (r, c) => {
+      const queue = [[r, c]];
+      const direction = [[-1, 0], [1, 0], [0, -1], [0, 1]]; // 상하좌우
+
+      while (queue.length != 0) {
+        const [r1, c1] = queue.shift();
+
+        for (const diff of direction) {
+          const [r2, c2] = [r1 + diff[0], c1 + diff[1]];
+
+          if (validIndex(r2, c2) && !visited[r2][c2]) {
+            const populationDiff = Math.abs(A[r1][c1] - A[r2][c2]);
+
+            if (L <= populationDiff && populationDiff <= R) {
+              queue.push([r2, c2]);
+              sharedCountries.push([r2, c2]);
+              visited[r2][c2] = true;
+            }
+          }
+        }
+      }
+    }
+
+    // row와 column 범위 만큼 순회 진행해 인구 인동 처리
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        if (visited[r][c]) continue;
+
+        visited[r][c] = true;
+        sharedCountries.push([r, c]);
+        bfs(r, c);
+
+        if (sharedCountries.length !== 1) {
+          let sum = 0;
+          let counter = 0;
+
+          sharedCountries.map((v) => {
+            sum += A[v[0]][v[1]];
+            counter += 1;
+          });
+
+          totalMovementAmount += sum;
+
+          let newPopulation = Math.floor(sum / counter);
+
+          sharedCountries.map((v) => {
+            A[v[0]][v[1]] = newPopulation;
+          });
+        }
+
+        sharedCountries = [];
+      }
+    }
+
+    return totalMovementAmount !== 0;
+  }
+
+  // 인구 이동이 없을 때 까지 반복 진행
+  while (true) {
+    const isMoved = movePopulation();
+
+    if (isMoved) {
+      answer += 1;
+      continue;
+    }
+
+    break;
+  }
+
   return answer;
 }
 
