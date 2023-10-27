@@ -32,89 +32,102 @@ const input = fs
 function solution(input) {
   let answer = 0;
 
-  const [N, L, R] = input[0].split(' ').map(Number);
+  const [N, M] = input[0].split(' ').map(Number);
   const A = new Array(N);
+
+  let cloud = [[N - 1, 0], [N - 1, 1], [N - 2, 0], [N - 2, 1]]; // (N, 1), (N, 2), (N-1, 1), (N-1, 2)
+
   for (let i = 0; i < N; i++) {
     A[i] = input[i + 1].split(' ').map(Number);
   }
 
-  const movePopulation = () => {
-    const visited = new Array(N);
-    for (let i = 0; i < N; i++) {
-      visited[i] = new Array(N).fill(false);
+  /**
+   * 구름을 이동 시키는 함수
+   * @param {number} d 방향에 대한 인덱스
+   * @param {number} s 거리
+   */
+  const moveCloud = (d, s) => {
+    const directions = [[0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1]]; // ←, ↖, ↑, ↗, →, ↘, ↓, ↙
+
+    cloud = cloud.map((v) => {
+      let [r, c] = v;
+      let [dr, dc] = directions[d - 1];
+      return [r + dr * s, c + dc * s];
+    })
+  };
+
+  /**
+   * 구름이 있는 격자의 칸에 비를 내리는 함수. 격자가 연결된 것을 고려해, 인덱스를 N으로 나눈 나머지로 지정.
+   */
+  const rain = () => {
+    const makeValidIndex = (i) => i < 0 ? N + i : i & N;;
+
+    for (const pos of cloud) {
+      const [r, c] = pos;
+      const r1 = makeValidIndex(r);
+      const c1 = makeValidIndex(c);
+
+      A[r1][c1] += 1;
     }
+  };
 
-    let totalMovementAmount = 0;
-    let sharedCountries = [];
+  /**
+   * 물 복사 버그 수행
+   */
+  const waterCopyBug = () => {
+    const diagonals = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
+    const isValidIndex = (r, c) => (0 <= r && r < N) && (0 <= c && c < N);
 
-    const validIndex = (r, c) => {
-      return (0 <= r && r < N) && (0 <= c && c < N);
-    }
+    cloud.map((v) => {
+      const [r, c] = v;
 
-    const bfs = (r, c) => {
-      const queue = [[r, c]];
-      const direction = [[-1, 0], [1, 0], [0, -1], [0, 1]]; // 상하좌우
+      diagonals.map((diagonal) => {
+        const [dr, dc] = diagonal;
+        const [r1, c1] = [r + dr, c + dc];
 
-      while (queue.length != 0) {
-        const [r1, c1] = queue.shift();
+        if (isValidIndex(r1, c1)) A[r1][c1] += 1;
+      });
+    });
+  };
 
-        for (const diff of direction) {
-          const [r2, c2] = [r1 + diff[0], c1 + diff[1]];
-
-          if (validIndex(r2, c2) && !visited[r2][c2]) {
-            const populationDiff = Math.abs(A[r1][c1] - A[r2][c2]);
-
-            if (L <= populationDiff && populationDiff <= R) {
-              queue.push([r2, c2]);
-              sharedCountries.push([r2, c2]);
-              visited[r2][c2] = true;
-            }
-          }
-        }
-      }
-    }
-
+  /**
+   * A를 순회 하며 물의 양이 2 이상인 격자에 대해 구름 생성
+   */
+  const makeCloud = () => {
+    let newCloud = [];
     for (let r = 0; r < N; r++) {
       for (let c = 0; c < N; c++) {
-        if (visited[r][c]) continue;
-
-        visited[r][c] = true;
-        sharedCountries.push([r, c]);
-        bfs(r, c);
-
-        if (sharedCountries.length !== 1) {
-          let sum = 0;
-          let counter = 0;
-
-          sharedCountries.map((v) => {
-            sum += A[v[0]][v[1]];
-            counter += 1;
-          });
-
-          totalMovementAmount += sum;
-
-          let newPopulation = Math.floor(sum / counter);
-
-          sharedCountries.map((v) => {
-            A[v[0]][v[1]] = newPopulation;
-          });
+        if (A[r][c] >= 2) {
+          A[r][c] -= 2;
+          newCloud.push([r, c]);
         }
-        sharedCountries = [];
       }
     }
 
-    return totalMovementAmount !== 0;
+    newCloud.filter((newPos) => {
+      return cloud.findIndex((pos) => pos[0] === newPos[0] && pos[1] === newPos[1]) === -1;
+    })
+
+
+    cloud = [...newCloud];
+  };
+
+  const movementCommand = (d, s) => {
+    moveCloud(d, s);
+    rain();
+    waterCopyBug();
+    makeCloud();
+  };
+
+  for (let i = 0; i < M; i++) {
+    const [di, si] = input[i + N + 1].split(' ').map(Number);
+    movementCommand(di, si);
   }
 
-  while (true) {
-    const isMoved = movePopulation();
-
-    if (isMoved) {
-      answer += 1;
-      continue;
+  for (let r = 0; r < N; r++) {
+    for (let c = 0; c < N; c++) {
+      answer += A[r][c];
     }
-
-    break;
   }
 
   return answer;
