@@ -58,25 +58,27 @@ function solution(input) {
   const moveCloud = (d, s) => {
     const directions = [[0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1]]; // ←, ↖, ↑, ↗, →, ↘, ↓, ↙
 
-    cloud = cloud.map((v) => {
-      let [r, c] = v;
+    const makeValidIndex = (i) => {
+      i = i % N;
+      return i < 0 ? i + N : i;
+    };
+
+    for (let i = 0; i < cloud.length; i++) {
+      let [r, c] = cloud[i];
       let [dr, dc] = directions[d - 1];
-      return [r + dr * s, c + dc * s];
-    })
+      const r1 = makeValidIndex(r + dr * s);
+      const c1 = makeValidIndex(c + dc * s);
+      cloud[i] = [r1, c1];
+    }
   };
 
   /**
    * 구름이 있는 격자의 칸에 비를 내리는 함수. 격자가 연결된 것을 고려해, 인덱스를 N으로 나눈 나머지로 지정.
    */
   const rain = () => {
-    const makeValidIndex = (i) => i < 0 ? N + i : i & N;;
-
     for (const pos of cloud) {
       const [r, c] = pos;
-      const r1 = makeValidIndex(r);
-      const c1 = makeValidIndex(c);
-
-      A[r1][c1] += 1;
+      A[r][c] += 1;
     }
   };
 
@@ -94,7 +96,7 @@ function solution(input) {
         const [dr, dc] = diagonal;
         const [r1, c1] = [r + dr, c + dc];
 
-        if (isValidIndex(r1, c1)) A[r1][c1] += 1;
+        if (isValidIndex(r1, c1) && A[r1][c1] !== 0) A[r][c] += 1;
       });
     });
   };
@@ -104,18 +106,17 @@ function solution(input) {
    */
   const makeCloud = () => {
     let newCloud = [];
+
     for (let r = 0; r < N; r++) {
       for (let c = 0; c < N; c++) {
-        if (A[r][c] >= 2) {
+        const isNotCloudPos = cloud.findIndex((pos) => pos[0] === r && pos[1] === c) === -1;
+
+        if (isNotCloudPos && A[r][c] >= 2) {
           A[r][c] -= 2;
           newCloud.push([r, c]);
         }
       }
     }
-
-    newCloud.filter((newPos) => {
-      return cloud.findIndex((pos) => pos[0] === newPos[0] && pos[1] === newPos[1]) === -1;
-    })
 
     cloud = [...newCloud];
   };
