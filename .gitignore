@@ -1,8 +1,7 @@
 # Setting for VScode
-.vscode/*
-!.vscode/launch.json
-!.vscode/settings.json
-programmers/.vscode
+# .vscode/*
+# !.vscode/launch.json
+# !.vscode/settings.json
 
 # Mac's service file
 .DS_Store
@@ -10,3 +9,4 @@ programmers/.vscode
 # C Language Build Files
 *.out
 *.out.dSYM
+*.dSYM
