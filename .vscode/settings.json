@@ -18,7 +18,6 @@
     "unordered_map": "cpp",
     "vector": "cpp"
   },
-  "editor.fontSize": 14,
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter",
   },
