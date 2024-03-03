@@ -1,18 +1,18 @@
-# Problem Titile
+# 10828 스택
 
-## 문제 원문
+## 📌 문제 링크
 
-[https://www.acmicpc.net/problem/10828](https://www.acmicpc.net/problem/10828)
+- <https://www.acmicpc.net/problem/10828>
 
-</br></br>
+## 📌 입력
 
-## 문제 해결 단서
+- 시용자 입력 명령어
+  - push: 정수를 스택에 입력
+  - pop: 스택의 맨 위에 있는 정수를 빼고, 출력. 정수가 없는 경우 -1 출력
+  - size: 스택에 있는 정수의 개수 출력
+  - empty: 스택이 비어있으면 1, 아니면 0
+  - top: 스택 가장 위에 있는 정수를 출력. 정수가 없는 경우 -1 출력
 
-1.
-2.
+## 📌 출력
 
-</br></br>
-
-## 문제 해결 방법
-
-1.
+- 입력한 명령어에 알맞은 출력
