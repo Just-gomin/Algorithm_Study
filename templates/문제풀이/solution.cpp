@@ -1,11 +1,14 @@
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
 
 using namespace std;
 
-void main()
+int main()
 {
     string input;
     cin >> input;
     cout << input;
+
+    return 0;
 }
