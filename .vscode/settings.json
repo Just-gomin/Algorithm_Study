@@ -17,7 +17,12 @@
     "string_view": "cpp",
     "unordered_map": "cpp",
     "vector": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "__split_buffer": "cpp",
+    "bitset": "cpp",
+    "initializer_list": "cpp",
+    "__locale": "cpp",
+    "queue": "cpp"
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter",
