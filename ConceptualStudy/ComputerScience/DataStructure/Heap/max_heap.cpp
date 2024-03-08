@@ -5,14 +5,14 @@
 using namespace std;
 
 template <typename T>
-class MinHeap
+class MaxHeap
 {
 private:
     T *_data;
     int maxSize;
 
 public:
-    MinHeap(int size)
+    MaxHeap(int size)
     {
         maxSize = size;
         _data = new T[maxSize];
@@ -170,7 +170,7 @@ public:
         cout << "]\n";
     }
 
-    ~MinHeap()
+    ~MaxHeap()
     {
         delete _data;
     }
@@ -178,7 +178,7 @@ public:
 
 int main()
 {
-    MinHeap<int> heap = MinHeap<int>(10);
+    MaxHeap<int> heap = MaxHeap<int>(10);
 
     for (int i = 1; i < 10; i++)
     {
