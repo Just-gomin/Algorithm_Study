@@ -43,12 +43,12 @@ public:
         int rightChild = leftChild + 1;
         int smallest = index;
 
-        if (leftChild <= maxSize && _data[smallest] > _data[leftChild])
+        if (leftChild <= _data[0] && _data[smallest] > _data[leftChild])
         {
             smallest = leftChild;
         }
 
-        if (rightChild <= maxSize && _data[smallest] > _data[rightChild])
+        if (rightChild <= _data[0] && _data[smallest] > _data[rightChild])
         {
             smallest = rightChild;
         }
@@ -63,7 +63,7 @@ public:
 
     void heapifyUp(int index)
     {
-        if (index > maxSize)
+        if (index > _data[0])
         {
             throw range_error("Invalid index. Index must be bigger than 0.");
             return;
@@ -86,7 +86,7 @@ public:
             return;
         }
 
-        if (index > maxSize)
+        if (index > _data[0])
         {
             return;
         }
