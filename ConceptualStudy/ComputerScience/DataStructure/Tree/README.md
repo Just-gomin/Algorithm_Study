@@ -137,7 +137,7 @@ RootNode부터 Key를 비교하며 삽입할 위치를 탐색한다. LeafNode에
 
 삽입 순서에 따라 한쪽으로 편향된 Tree가 될 수 있으며, 이 경우 연결 리스트와 동일한 `O(n)` 성능을 갖는다. 이 문제를 해결하기 위해 스스로 균형을 유지하는 Self-Balancing BST가 등장했다.
 
-## 📌 AVL Tree
+## 📌 AVL(Adelson-Velskiiand Landis) Tree
 
 모든 Node에서 Left Subtree와 Right Subtree의 높이 차이가 1 이하인 Self-Balancing BST이다. 삽입이나 삭제 시 균형이 깨지면 Rotation을 통해 자동으로 균형을 복원한다.
 
