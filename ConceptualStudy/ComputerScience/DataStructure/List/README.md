@@ -31,7 +31,7 @@ List의 처음과 끝, i 번째 자리 Data에 접근하는 동작
 
 ### Array Based List
 
-배열을 이용한 List입니다.
+[Array(배열)](../Array/README.md)를 이용한 List입니다.
 
 ![add data on array based list](add-data-on-array-based-list.jpeg)
 ![delete data on array based list](delete-data-on-array-based-list.jpeg)

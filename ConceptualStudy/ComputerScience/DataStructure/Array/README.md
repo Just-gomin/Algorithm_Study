@@ -38,4 +38,4 @@ Array(배열)은 연속된 공간에 같은 유형의 데이터를 저장하는 
 
 ## 📌 참고자료
 
-[배열](https://ko.wikipedia.org/wiki/배열)
+[배열 @Wikipedia](https://ko.wikipedia.org/wiki/배열)
