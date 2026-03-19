@@ -40,6 +40,3 @@ Array(배열)은 연속된 공간에 같은 유형의 데이터를 저장하는 
 
 [배열](https://ko.wikipedia.org/wiki/배열)
 
-## 📌 Posting
-
-<https://www.notion.so/just-gomin/Array-27e52be0811647cebf8fdb269b09c623?pvs=4>
