@@ -4,7 +4,7 @@ Stack(스택)은 LIFO(Last In First Out) 특성을 갖는 자료구조
 
 ## 📌 LIFO
 
-Last In First Out은 마지막에 추가된 데이터가 가장 먼저 나감을 의미 합니다.
+Last In First Out은 마지막에 추가된 데이터가 가장 먼저 나감을 의미
 
 ![stack last in first out](stack.jpeg)
 
