@@ -1,3 +1,41 @@
-# Array
+# 💡 Array
 
-[https://www.notion.so/just-gomin/Array-27e52be0811647cebf8fdb269b09c623?pvs=4](https://www.notion.so/just-gomin/Array-27e52be0811647cebf8fdb269b09c623?pvs=4)
+Array(배열)은 연속된 공간에 같은 유형의 데이터를 저장하는 자료구조
+
+## 📌 특징
+
+### 1. Element(엘리멘트, 요소)
+
+배열에 담긴 데이터
+
+### 2. Index(인덱스)
+
+- 배열 내의 위치
+- 요소에 접근할 때 사용
+- 인덱스는 0부터 시작
+
+### 3. 공백 허용
+
+배열은 각 위치 마다 데이터를 저장하고 있으며, 값이 없는 공백을 허용
+
+### 4. 고정된 크기
+
+배열은 처음 생성 시 그 크기를 지정
+
+## 📌 Operations
+
+### 1. Insert
+
+배열의 처음과 끝, i 번째 자리에 데이터를 추가하는 동작
+
+### 2. Delete
+
+배열의 처음과 끝, i 번째 자리에 데이터를 삭제하는 동작
+
+### 3. Access
+
+배열의 처음과 끝, i 번째 자리의 데이터에 접근하는 동작
+
+## 📌 참고자료
+
+[배열 @Wikipedia](https://ko.wikipedia.org/wiki/배열)
